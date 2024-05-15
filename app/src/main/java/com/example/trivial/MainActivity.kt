@@ -10,13 +10,20 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import com.example.trivial.databinding.ActivityMainBinding
+import com.example.trivial.modelo.Perfil
+import com.example.trivial.modelo.Pregunta
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    var perfil: Perfil? = null
+    var preguntas: MutableList<Pregunta> = mutableListOf()
+    var aciertos: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,12 +34,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -46,8 +47,12 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+            R.id.m_volver -> {
+                findNavController(R.id.nav_host_fragment_content_main).popBackStack()
+                true
+            }
+
+            else -> false
         }
     }
 
