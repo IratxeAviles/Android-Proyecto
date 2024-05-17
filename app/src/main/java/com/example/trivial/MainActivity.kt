@@ -1,5 +1,6 @@
 package com.example.trivial
 
+import android.content.res.Configuration
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.trivial.databinding.ActivityMainBinding
 import com.example.trivial.modelo.Perfil
 import com.example.trivial.modelo.Pregunta
@@ -51,9 +53,21 @@ class MainActivity : AppCompatActivity() {
                 findNavController(R.id.nav_host_fragment_content_main).popBackStack()
                 true
             }
+            R.id.m_modo -> {
+                cambiarModo()
+                true
+            }
 
             else -> false
         }
+    }
+    private fun cambiarModo() {
+        val modoOscuro = if ((resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES) {
+            AppCompatDelegate.MODE_NIGHT_NO
+        } else {
+            AppCompatDelegate.MODE_NIGHT_YES
+        }
+        AppCompatDelegate.setDefaultNightMode(modoOscuro)
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -49,10 +49,6 @@ class SecondFragment : Fragment() {
                 }
             }
 
-            override fun onPrepareMenu(menu: Menu) {
-                super.onPrepareMenu(menu)
-                menu.findItem(R.id.m_volver).isVisible=true
-            }
         },viewLifecycleOwner, Lifecycle.State.RESUMED)
 
     }

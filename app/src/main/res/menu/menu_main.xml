@@ -5,6 +5,11 @@
     <item
         android:id="@+id/m_volver"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Volver"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/m_modo"
+        android:orderInCategory="100"
+        android:title="Modo claro/oscuro"
+        app:showAsAction="never"/>
 </menu>

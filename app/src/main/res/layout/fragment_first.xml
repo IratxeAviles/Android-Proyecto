@@ -4,46 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_dark"
     tools:context=".FirstFragment">
 
-    <TextView
-        android:id="@+id/tBienvenida"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bienvenid@"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<TextView
+android:id="@+id/tBienvenida"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Bienvenid@"
+android:textSize="22sp"
+android:textColor="#FFFFFF"
+    app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<LinearLayout
+android:id="@+id/linearLayout2"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:gravity="center_horizontal"
+android:orientation="vertical"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/bJugar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:padding="16dp"
-            android:text="Jugar"
-            android:textSize="16sp" />
+<Button
+    android:id="@+id/bJugar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    android:padding="16dp"
+    android:text="Jugar"
+    android:textColor="#FFFFFF"
+android:backgroundTint="#6200EE"
+android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/bPuntuacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:padding="16dp"
-            android:text="Puntuaciones"
-            android:textSize="16sp" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+<Button
+    android:id="@+id/bPuntuacion"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    android:padding="16dp"
+    android:text="Puntuaciones"
+    android:textColor="#FFFFFF"
+android:backgroundTint="#6200EE"
+android:textSize="16sp" />
+</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
