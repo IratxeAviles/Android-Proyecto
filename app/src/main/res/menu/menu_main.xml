@@ -7,9 +7,4 @@
         android:orderInCategory="100"
         android:title="Volver"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/m_modo"
-        android:orderInCategory="100"
-        android:title="Modo claro/oscuro"
-        app:showAsAction="never"/>
 </menu>

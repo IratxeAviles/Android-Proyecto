@@ -53,21 +53,8 @@ class MainActivity : AppCompatActivity() {
                 findNavController(R.id.nav_host_fragment_content_main).popBackStack()
                 true
             }
-            R.id.m_modo -> {
-                cambiarModo()
-                true
-            }
-
             else -> false
         }
-    }
-    private fun cambiarModo() {
-        val modoOscuro = if ((resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES) {
-            AppCompatDelegate.MODE_NIGHT_NO
-        } else {
-            AppCompatDelegate.MODE_NIGHT_YES
-        }
-        AppCompatDelegate.setDefaultNightMode(modoOscuro)
     }
 
     override fun onSupportNavigateUp(): Boolean {
