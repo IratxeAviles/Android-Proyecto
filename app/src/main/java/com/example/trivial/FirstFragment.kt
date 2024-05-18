@@ -65,8 +65,8 @@ class FirstFragment : Fragment() {
             }
         },viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        (activity as MainActivity).perfil?.let{
-            binding.tBienvenida.text="Bienvenid@ ${it.usuario}"
+        (activity as MainActivity).miViewModel.usuario?.let{
+            binding.tBienvenida.text="¡Bienvenid@ ${it.usuario}!"
         }
 
         binding.bJugar.setOnClickListener {

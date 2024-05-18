@@ -10,16 +10,19 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.trivial.databinding.ActivityMainBinding
 import com.example.trivial.modelo.Perfil
 import com.example.trivial.modelo.Pregunta
+import com.example.trivial.modelo.VM
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    val miViewModel: VM by viewModels()
     var perfil: Perfil? = null
     var preguntas: MutableList<Pregunta> = mutableListOf()
     var aciertos: Int = 0
