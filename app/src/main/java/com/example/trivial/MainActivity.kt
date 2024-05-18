@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.example.trivial.databinding.ActivityMainBinding
 import com.example.trivial.modelo.Perfil
 import com.example.trivial.modelo.Pregunta
+import com.example.trivial.modelo.Puntuacion
 import com.example.trivial.modelo.VM
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     var perfil: Perfil? = null
     var preguntas: MutableList<Pregunta> = mutableListOf()
     var aciertos: Int = 0
+    var puntuaciones: MutableList<Puntuacion> = mutableListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayShowTitleEnabled(false)

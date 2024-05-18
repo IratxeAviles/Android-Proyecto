@@ -101,7 +101,7 @@ class FirstFragment : Fragment() {
         }
 
         binding.bPuntuacion.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_thirdFragment)
+            findNavController().navigate(R.id.action_FirstFragment_to_fourthFragment)
         }
     }
 
