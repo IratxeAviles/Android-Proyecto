@@ -12,6 +12,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -92,11 +93,15 @@ class FirstFragment : Fragment() {
         }
 
         binding.bJugar.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_thirdFragment)
+            if (ComprobarSesion()){
+                findNavController().navigate(R.id.action_FirstFragment_to_thirdFragment)
+            } else {
+                Toast.makeText(activity,"No has iniciado sesion", Toast.LENGTH_LONG).show()
+            }
         }
 
         binding.bPuntuacion.setOnClickListener {
-            //puntuacion()
+            findNavController().navigate(R.id.action_FirstFragment_to_thirdFragment)
         }
     }
 
