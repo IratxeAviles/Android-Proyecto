@@ -13,7 +13,7 @@ import com.example.trivial.databinding.RecyclerviewItemBinding
 import com.example.trivial.modelo.Puntuacion
 import com.example.trivial.modelo.VM
 
-class Adaptador(val puntuaciones: MutableList<Puntuacion>) : RecyclerView.Adapter<Adaptador.ViewHolder>() {
+class Adaptador(val lista: MutableList<Puntuacion>) : RecyclerView.Adapter<Adaptador.ViewHolder>() {
     inner class ViewHolder (val binding: RecyclerviewItemBinding): RecyclerView.ViewHolder(binding.root){
         var id:Int=-1
     }
@@ -24,12 +24,12 @@ class Adaptador(val puntuaciones: MutableList<Puntuacion>) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.tUsuario.text=puntuaciones[position].usuario //"Título: ${peliculas[position].titulo}"
-        holder.binding.tPuntuacion.text=puntuaciones[position].puntuacion.toString() //"Género: ${peliculas[position].genero}"
-        holder.id=puntuaciones[position].id
+        holder.binding.tUsuario.text=lista[position].usuario
+        holder.binding.tPuntuacion.text=lista[position].puntuacion.toString()
+        holder.id=lista[position].id
     }
 
     override fun getItemCount(): Int {
-        return puntuaciones.count()
+        return lista.count()
     }
 }

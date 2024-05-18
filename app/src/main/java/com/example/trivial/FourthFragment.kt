@@ -31,8 +31,8 @@ class FourthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.clRecyclerView.layoutManager = LinearLayoutManager(activity as MainActivity)
-        binding.clRecyclerView.adapter = Adaptador((activity as MainActivity).puntuaciones)
+        binding.rvPuntuaciones.layoutManager = LinearLayoutManager(activity as MainActivity)
+        binding.rvPuntuaciones.adapter = Adaptador((activity as MainActivity).puntuaciones)
 
     }
 
