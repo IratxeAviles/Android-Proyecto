@@ -14,7 +14,7 @@ class PreguntasVM(private val miRepositorio: Repositorio) : ViewModel() {
     lateinit var pregunta: LiveData<Pregunta>
 
     fun mostrarPreguntas() = viewModelScope.launch {
-        listaPreguntas = miRepositorio.mostrarPerfiles().asLiveData()
+        listaPreguntas = miRepositorio.mostrarPreguntas().asLiveData()
     }
 
     @WorkerThread
@@ -28,7 +28,7 @@ class PreguntasVM(private val miRepositorio: Repositorio) : ViewModel() {
     }
 
     fun buscarPreguntaPorId(id: Int) = viewModelScope.launch {
-        pregunta = miRepositorio.buscarPerfilPorId(id).asLiveData()
+        pregunta = miRepositorio.buscarPreguntaPorId(id).asLiveData()
     }
 }
 
