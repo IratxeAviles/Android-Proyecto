@@ -1,5 +1,7 @@
 package com.example.trivial
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -57,10 +59,28 @@ class MainActivity : AppCompatActivity() {
                 findNavController(R.id.nav_host_fragment_content_main).popBackStack()
                 true
             }
-            else -> false
+            R.id.m_LogOut -> {
+                cerrarSesion()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+
+
         }
     }
 
+    fun cerrarSesion() {
+        val datos: SharedPreferences =this.getSharedPreferences("datos",
+            Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor =datos.edit()
+        editor.putString("usuario","")
+        editor.putString("password","")
+        editor.apply()
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController.popBackStack(R.id.FirstFragment, false)
+        navController.navigate(R.id.FirstFragment)
+
+    }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)

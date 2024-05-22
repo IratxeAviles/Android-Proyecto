@@ -58,15 +58,13 @@ class SecondFragment : Fragment() {
             }
             errores=""
         }
-        binding.bRegistro.setOnClickListener {
-            sesion()
-        }
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_fragment_second, menu)
+                menu.findItem(R.id.m_LogOut).isVisible = false
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -92,10 +90,6 @@ class SecondFragment : Fragment() {
             }
         }
         return errores
-    }
-
-    fun sesion(){
-
     }
     override fun onDestroyView() {
         super.onDestroyView()

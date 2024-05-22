@@ -51,7 +51,7 @@ class FirstFragment : Fragment() {
         if (datos.getString("usuario", "")?.isNotEmpty() ?: false &&
             datos.getString("password", "")?.isNotEmpty() ?: false
         ) {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 
         val menuHost: MenuHost = requireActivity()
@@ -85,24 +85,16 @@ class FirstFragment : Fragment() {
 
                 val isLoggedIn = comprobarSesion()
                 menu.findItem(R.id.m_Iniciar).isVisible = !isLoggedIn
-                menu.findItem(R.id.m_Cerrar).isVisible = isLoggedIn
-
-                // Para aplicar el color blanco a la letra del los menu item
-                for (i in 0 until menu.size()) {
-                    val menuItem = menu.getItem(i)
-                    val spannableTitle = SpannableString(menuItem.title)
-                    spannableTitle.setSpan(
-                        ForegroundColorSpan(Color.WHITE),
-                        0,
-                        spannableTitle.length,
-                        0
-                    )
-                    menuItem.title = spannableTitle
-                }
+                menu.findItem(R.id.m_LogOut).isVisible = isLoggedIn
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        binding.tBienvenida.text = "¡Bienvenid@!" // ${it.usuario} --> ya no funciona
+        if (comprobarSesion()){
+            binding.tBienvenida.text = "¡Bienvenid@!" // ${it.usuario} --> ya no funciona
+        } else {
+            binding.tBienvenida.text = "No has iniciado sesion" // ${it.usuario} --> ya no funciona
+
+        }
 
         binding.bJugar.setOnClickListener {
             if (comprobarSesion()) {

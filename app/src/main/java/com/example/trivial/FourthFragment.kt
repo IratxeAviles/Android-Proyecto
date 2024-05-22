@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ejercicio6.recyclerView.Adaptador
 import com.example.trivial.databinding.FragmentFourthBinding
 import com.example.trivial.modelo.Puntuacion
@@ -17,6 +18,7 @@ class FourthFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    lateinit var miRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +32,18 @@ class FourthFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+/*
+        (activity as MainActivity).miViewModel.mostrarPuntuaciones() // seria con puntuaciones, pero para probar
+        (activity as MainActivity).miViewModel.listaPuntuaciones.observe(activity as MainActivity) {
+            if(it!=null){
+                miRecyclerView = binding.rvPuntuaciones
+                miRecyclerView.layoutManager = LinearLayoutManager(activity)
+                miRecyclerView.adapter = Adaptador(it)
+            }
 
-        binding.rvPuntuaciones.layoutManager = LinearLayoutManager(activity as MainActivity)
-        binding.rvPuntuaciones.adapter = Adaptador((activity as MainActivity).puntuaciones)
+        }
 
+ */
     }
 
     override fun onDestroyView() {

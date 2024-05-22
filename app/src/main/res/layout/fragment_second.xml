@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Inicio de Sesión"
-        android:textSize="24sp"
+        android:textSize="32sp"
+        android:layout_marginTop="80dp"
         app:layout_constraintBottom_toTopOf="@+id/llPrincipal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,14 +21,17 @@
 
     <LinearLayout
         android:id="@+id/llPrincipal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp"
+        android:layout_margin="40dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/tInicio"
+        android:gravity="center_horizontal">
 
         <EditText
             android:id="@+id/etUsuario"
@@ -36,7 +40,9 @@
             android:ems="10"
             android:hint="Usuario"
             android:inputType="text"
-            android:minHeight="48dp" />
+            android:layout_marginBottom="40dp"
+            android:minHeight="48dp"
+            android:textSize="22sp"/>
 
         <EditText
             android:id="@+id/etContrasena"
@@ -46,30 +52,19 @@
             android:hint="Contraseña"
             android:inputType="text|textPassword"
             android:minHeight="48dp"
-            android:password="true"
-            android:visibility="visible" />
+            android:layout_marginBottom="40dp"
+            android:visibility="visible"
+            android:textSize="22sp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/bRegistro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:padding="16dp"
-                android:text="Registrarse" />
-
-            <Button
-                android:id="@+id/bSesion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:padding="16dp"
-                android:text="Iniciar sesion" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/bSesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:padding="16dp"
+            android:text="Iniciar sesion"
+            android:textSize="22sp"
+            />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
