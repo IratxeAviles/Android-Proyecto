@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    // falta el alias de kotlin-kapt
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -52,10 +52,12 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.androidx.preference.ktx)
-    implementation(libs.androidx.room.ktx) // tenia un exclude en los apuntes
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.testing)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation("androidx.room:room-ktx:2.6.1"){
+        exclude(group= "androidx.lifecycle", module= "lifecycle-livedata-ktx")
+    }
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    androidTestImplementation("androidx.room:room-testing:2.6.1")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 }

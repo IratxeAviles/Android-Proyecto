@@ -1,8 +1,6 @@
 package com.example.trivial
 
-import android.content.res.Configuration
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,24 +9,24 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatDelegate
+import com.example.trivial.bbdd.BBDD
+import com.example.trivial.bbdd.Repositorio
 import com.example.trivial.databinding.ActivityMainBinding
 import com.example.trivial.modelo.Perfil
 import com.example.trivial.modelo.Pregunta
 import com.example.trivial.modelo.Puntuacion
-import com.example.trivial.modelo.VM
+import com.example.trivial.modelo.PerfilesVM
+import com.example.trivial.modelo.PerfilesViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    val miViewModel: VM by viewModels()
-    var perfil: Perfil? = null
-    var preguntas: MutableList<Pregunta> = mutableListOf()
-    var aciertos: Int = 0
+    val miDataBase by lazy { BBDD.getDatabase(this)}
+    val miRepositorio by lazy { Repositorio(miDataBase.miDAO()) }
+    val miViewModel: PerfilesVM by viewModels { PerfilesViewModelFactory(miRepositorio) }
     var puntuaciones: MutableList<Puntuacion> = mutableListOf()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayShowTitleEnabled(false)

@@ -1,17 +1,16 @@
 package com.example.trivial.modelo
 
-class Puntuacion(var id:Int, var usuario:String, var puntuacion:Int) {
-    // No se si el id lo necesito
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import org.jetbrains.annotations.NotNull
 
-        other as Puntuacion
+@Entity (tableName = "tabla_perfiles")
+data class Puntuacion(
+    @PrimaryKey(autoGenerate = true) val id:Int=0,
+    @NotNull @ColumnInfo var usuario: String,
+    @NotNull @ColumnInfo var record: Int,
+) {
 
-        return id == other.id
-    }
 
-    override fun hashCode(): Int {
-        return id
-    }
 }

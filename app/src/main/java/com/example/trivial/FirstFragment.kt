@@ -1,6 +1,7 @@
 package com.example.trivial
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
@@ -45,6 +46,14 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val datos: SharedPreferences =
+            (activity as MainActivity).getSharedPreferences("datos", Context.MODE_PRIVATE)
+        if (datos.getString("usuario", "")?.isNotEmpty() ?: false &&
+            datos.getString("password", "")?.isNotEmpty() ?: false
+        ) {
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
+
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
 
@@ -57,12 +66,12 @@ class FirstFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.m_Iniciar -> {
-                        InicioSesion()
+                        inicioSesion()
                         true
                     }
 
                     R.id.m_Cerrar -> {
-                        CerrarSesion()
+                        cerrarSesion(datos)
                         true
                     }
 
@@ -74,7 +83,7 @@ class FirstFragment : Fragment() {
                 super.onPrepareMenu(menu)
                 menu.findItem(R.id.m_volver).isVisible = false
 
-                val isLoggedIn = ComprobarSesion()
+                val isLoggedIn = comprobarSesion()
                 menu.findItem(R.id.m_Iniciar).isVisible = !isLoggedIn
                 menu.findItem(R.id.m_Cerrar).isVisible = isLoggedIn
 
@@ -82,21 +91,24 @@ class FirstFragment : Fragment() {
                 for (i in 0 until menu.size()) {
                     val menuItem = menu.getItem(i)
                     val spannableTitle = SpannableString(menuItem.title)
-                    spannableTitle.setSpan(ForegroundColorSpan(Color.WHITE), 0, spannableTitle.length, 0)
+                    spannableTitle.setSpan(
+                        ForegroundColorSpan(Color.WHITE),
+                        0,
+                        spannableTitle.length,
+                        0
+                    )
                     menuItem.title = spannableTitle
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        (activity as MainActivity).miViewModel.usuario?.let {
-            binding.tBienvenida.text = "¡Bienvenid@ ${it.usuario}!"
-        }
+        binding.tBienvenida.text = "¡Bienvenid@!" // ${it.usuario} --> ya no funciona
 
         binding.bJugar.setOnClickListener {
-            if (ComprobarSesion()){
+            if (comprobarSesion()) {
                 findNavController().navigate(R.id.action_FirstFragment_to_thirdFragment)
             } else {
-                Toast.makeText(activity,"No has iniciado sesion", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "No has iniciado sesion", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -105,30 +117,22 @@ class FirstFragment : Fragment() {
         }
     }
 
-    private fun ComprobarSesion(): Boolean {
-        //val sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        //return sharedPreferences.getBoolean("is_logged_in", false)
-        if ((activity as MainActivity).miViewModel.usuario == null) {
-            return false
-        } else {
-            return true
-        }
+    private fun comprobarSesion(): Boolean {
+        val datos: SharedPreferences =
+            (activity as MainActivity).getSharedPreferences("datos", Context.MODE_PRIVATE)
+
+        return datos.getBoolean("is_logged_in", false)
     }
 
-    fun InicioSesion() {
+    fun inicioSesion() {
         findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
     }
 
-    fun CerrarSesion() {
-        (activity as MainActivity).miViewModel.usuario = null
-        binding.tBienvenida.text = "Inicia sesión para poder jugar"
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        with(sharedPreferences.edit()) {
-            putBoolean("is_logged_in", false)
-            apply()
-        }
-        activity?.invalidateOptionsMenu()
+    fun cerrarSesion(datos: SharedPreferences) {
+        val editor: SharedPreferences.Editor = datos.edit()
+        editor.putString("usuario", "")
+        editor.putString("password", "")
+        editor.apply()
     }
 
     override fun onDestroyView() {

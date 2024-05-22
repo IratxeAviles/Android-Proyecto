@@ -1,5 +1,7 @@
 package com.example.trivial
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -41,6 +43,25 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val datos: SharedPreferences =(activity as MainActivity).getSharedPreferences("datos",
+            Context.MODE_PRIVATE)
+
+        binding.bSesion.setOnClickListener {
+            if(validar()==""){
+                val editor: SharedPreferences.Editor =datos.edit()
+                editor.putString("usuario", binding.etUsuario.text.toString())
+                editor.putString("password",binding.etContrasena.text.toString())
+                editor.apply()
+                findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+            } else {
+                Toast.makeText(activity,errores, Toast.LENGTH_LONG).show()
+            }
+            errores=""
+        }
+        binding.bRegistro.setOnClickListener {
+            sesion()
+        }
+
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
 
@@ -59,15 +80,7 @@ class SecondFragment : Fragment() {
             }
 
         },viewLifecycleOwner, Lifecycle.State.RESUMED)
-
-        binding.bSesion.setOnClickListener {
-            sesion()
-        }
-        binding.bRegistro.setOnClickListener {
-            sesion()
-        }
     }
-
 
     private fun validar():String{
         for (i in 0 until binding.llPrincipal.childCount) {
@@ -82,16 +95,7 @@ class SecondFragment : Fragment() {
     }
 
     fun sesion(){
-        if (validar()==""){
-            val usuario= Perfil(binding.etUsuario.text.toString(),
-                binding.etContrasena.text.toString() )
-            (activity as MainActivity).miViewModel.usuario =usuario
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }
-        else{
-            Toast.makeText(activity,errores, Toast.LENGTH_LONG).show()
-        }
-        errores=""
+
     }
     override fun onDestroyView() {
         super.onDestroyView()
