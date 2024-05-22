@@ -28,11 +28,6 @@ class PerfilesVM(private val miRepositorio: Repositorio) : ViewModel() {
         miRepositorio.borrarPerfil(miPerfil)
     }
 
-    @WorkerThread
-    fun modificarPerfil(miPerfil: Perfil) = viewModelScope.launch {
-        miRepositorio.modificarPerfil(miPerfil)
-    }
-
     fun buscarPerfilPorId(id: Int) = viewModelScope.launch {
         perfil = miRepositorio.buscarPerfilPorId(id).asLiveData()
     }
@@ -47,12 +42,3 @@ class PerfilesViewModelFactory(private val miRepositorio: Repositorio) : ViewMod
         throw IllegalArgumentException("ViewModel class desconocida")
     }
 }
-
-/*
-class PerfilVM: ViewModel() {
-    var usuario: Perfil?=null
-    var preguntas: MutableList<Pregunta> = mutableListOf()
-    var aciertos: Pregunta?=null // no se si asi o siendo int
-}
-
- */

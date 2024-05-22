@@ -10,6 +10,7 @@ data class Perfil(
     @PrimaryKey(autoGenerate = true) val id:Int=0,
     @NotNull @ColumnInfo var usuario: String,
     @NotNull @ColumnInfo var contrasena: String,
+    @NotNull @ColumnInfo var record: Int = 0,
 ) {
 
 
