@@ -16,9 +16,10 @@ import com.example.trivial.bbdd.Repositorio
 import com.example.trivial.databinding.ActivityMainBinding
 import com.example.trivial.modelo.Perfil
 import com.example.trivial.modelo.Pregunta
-import com.example.trivial.modelo.Puntuacion
 import com.example.trivial.modelo.PerfilesVM
 import com.example.trivial.modelo.PerfilesViewModelFactory
+import com.example.trivial.modelo.PreguntasVM
+import com.example.trivial.modelo.PreguntasViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,8 +28,9 @@ class MainActivity : AppCompatActivity() {
 
     val miDataBase by lazy { BBDD.getDatabase(this)}
     val miRepositorio by lazy { Repositorio(miDataBase.miDAO()) }
-    val miViewModel: PerfilesVM by viewModels { PerfilesViewModelFactory(miRepositorio) }
-    var puntuaciones: MutableList<Puntuacion> = mutableListOf()
+    val preguntasVM: PreguntasVM by viewModels { PreguntasViewModelFactory(miRepositorio) }
+    val perfilesVM: PerfilesVM by viewModels { PerfilesViewModelFactory(miRepositorio) }
+    var puntuaciones: MutableList<Perfil> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -45,15 +47,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.m_volver -> {
                 findNavController(R.id.nav_host_fragment_content_main).popBackStack()
@@ -74,7 +72,7 @@ class MainActivity : AppCompatActivity() {
             Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor =datos.edit()
         editor.putString("usuario","")
-        editor.putString("password","")
+        editor.putString("contrasena","")
         editor.apply()
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         navController.popBackStack(R.id.FirstFragment, false)

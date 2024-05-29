@@ -28,6 +28,7 @@ class SecondFragment : Fragment() {
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
     private var errores: String=""
+    private var codigo: Int = 0
 
 
     override fun onCreateView(
@@ -47,12 +48,32 @@ class SecondFragment : Fragment() {
             Context.MODE_PRIVATE)
 
         binding.bSesion.setOnClickListener {
+
             if(validar()==""){
-                val editor: SharedPreferences.Editor =datos.edit()
-                editor.putString("usuario", binding.etUsuario.text.toString())
-                editor.putString("password",binding.etContrasena.text.toString())
-                editor.apply()
-                findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+                (activity as MainActivity).perfilesVM.mostrarPerfiles()
+                (activity as MainActivity).perfilesVM.listaPerfiles.observe(activity as MainActivity){
+                    for (perfil in it) {
+                        if (perfil.usuario == binding.etUsuario.text.toString()){
+                            if (perfil.contrasena == binding.etContrasena.text.toString()){
+                                codigo = perfil.id
+                                break
+                            }
+                        }
+                    }
+                    if (codigo == 0){
+                        // crear perfil
+                    } else {
+                        // iniciar sesion con el perfil
+                        val editor: SharedPreferences.Editor =datos.edit()
+                        editor.putString("usuario", binding.etUsuario.text.toString())
+                        editor.putString("contrasena",binding.etContrasena.text.toString())
+                        editor.putInt("id", codigo)
+                        editor.apply()
+                        findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+                    }
+                }
+
+
             } else {
                 Toast.makeText(activity,errores, Toast.LENGTH_LONG).show()
             }

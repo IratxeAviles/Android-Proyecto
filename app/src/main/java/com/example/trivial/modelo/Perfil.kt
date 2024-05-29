@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull
 
 @Entity (tableName = "tabla_perfiles")
 data class Perfil(
-    @PrimaryKey(autoGenerate = true) val id:Int=0,
+    @PrimaryKey(autoGenerate = true) val id:Int=1,
     @NotNull @ColumnInfo var usuario: String,
     @NotNull @ColumnInfo var contrasena: String,
     @NotNull @ColumnInfo var record: Int = 0,
