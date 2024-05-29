@@ -8,9 +8,9 @@ import org.jetbrains.annotations.NotNull
 @Entity(tableName = "tabla_preguntas")
 data class Pregunta(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    @NotNull @ColumnInfo var pregunta: String,
-    @NotNull @ColumnInfo var respuestas: MutableList<String>,
-    @NotNull @ColumnInfo var correcta: Int,
+    @NotNull @ColumnInfo (name = "pregunta") var pregunta: String,
+    @NotNull @ColumnInfo (name = "respuestas")var respuestas: Array<String>,
+    @NotNull @ColumnInfo (name = "correcta") var correcta: Int,
 ) {
 
 
