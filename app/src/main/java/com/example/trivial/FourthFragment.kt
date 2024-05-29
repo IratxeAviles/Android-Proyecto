@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ejercicio6.recyclerView.Adaptador
 import com.example.trivial.databinding.FragmentFourthBinding
-import com.example.trivial.modelo.Puntuacion
 
 
 class FourthFragment : Fragment() {
