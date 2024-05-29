@@ -6,26 +6,26 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.trivial.modelo.Perfil
 import com.example.trivial.modelo.Pregunta
+import com.example.trivial.modelo.Puntuacion
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DAO {
-    @Query("SELECT * FROM tabla_perfiles ORDER BY id ASC")
-    fun mostrarPerfiles(): Flow<List<Perfil>>
+    @Query("SELECT * FROM tabla_puntuaciones ORDER BY id ASC")
+    fun mostrarPuntuaciones(): Flow<List<Puntuacion>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertarPerfil(miPerfil: Perfil)
+    suspend fun insertarPuntuacion(miPuntuacion: Puntuacion)
 
     @Delete
-    suspend fun borrarPerfil(miPerfil: Perfil)
+    suspend fun borrarPuntuacion(miPuntuacion: Puntuacion)
 
     @Update
-    suspend fun modificarPerfil(miPerfil: Perfil)
+    suspend fun modificarPuntuacion(miPuntuacion: Puntuacion)
 
-    @Query("SELECT * FROM tabla_perfiles where id like :id")
-    fun buscarPerfilPorId(id: Int): Flow<Perfil>
+    @Query("SELECT * FROM tabla_puntuaciones where id like :id")
+    fun buscarPuntuacionPorId(id: Int): Flow<Puntuacion>
 
     @Query("SELECT * FROM tabla_preguntas ORDER BY id ASC")
     fun mostrarPreguntas(): Flow<List<Pregunta>>
