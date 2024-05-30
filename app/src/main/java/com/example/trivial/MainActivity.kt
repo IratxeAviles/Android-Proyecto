@@ -14,12 +14,12 @@ import androidx.activity.viewModels
 import com.example.trivial.bbdd.BBDD
 import com.example.trivial.bbdd.Repositorio
 import com.example.trivial.databinding.ActivityMainBinding
-import com.example.trivial.modelo.Perfil
 import com.example.trivial.modelo.Pregunta
-import com.example.trivial.modelo.PerfilesVM
-import com.example.trivial.modelo.PerfilesViewModelFactory
 import com.example.trivial.modelo.PreguntasVM
 import com.example.trivial.modelo.PreguntasViewModelFactory
+import com.example.trivial.modelo.Puntuacion
+import com.example.trivial.modelo.PuntuacionesVM
+import com.example.trivial.modelo.PuntuacionesViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
     val miDataBase by lazy { BBDD.getDatabase(this)}
     val miRepositorio by lazy { Repositorio(miDataBase.miDAO()) }
     val preguntasVM: PreguntasVM by viewModels { PreguntasViewModelFactory(miRepositorio) }
-    val perfilesVM: PerfilesVM by viewModels { PerfilesViewModelFactory(miRepositorio) }
-    var puntuaciones: MutableList<Perfil> = mutableListOf()
+    val puntuacionesVM: PuntuacionesVM by viewModels { PuntuacionesViewModelFactory(miRepositorio) }
+    var puntuaciones: MutableList<Puntuacion> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayShowTitleEnabled(false)

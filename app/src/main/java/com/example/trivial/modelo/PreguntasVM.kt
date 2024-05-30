@@ -34,9 +34,9 @@ class PreguntasVM(private val miRepositorio: Repositorio) : ViewModel() {
 
 class PreguntasViewModelFactory(private val miRepositorio: Repositorio) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(PerfilesVM::class.java)) {
+        if (modelClass.isAssignableFrom(PreguntasVM::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return PerfilesVM(miRepositorio) as T
+            return PreguntasVM(miRepositorio) as T
         }
         throw IllegalArgumentException("ViewModel class desconocida")
     }
