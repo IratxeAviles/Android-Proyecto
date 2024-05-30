@@ -18,7 +18,6 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.trivial.databinding.FragmentSecondBinding
-import com.example.trivial.modelo.Perfil
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -27,9 +26,8 @@ class SecondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
-    private var errores: String=""
+    private var errores: String = ""
     private var codigo: Int = 0
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,40 +42,42 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val datos: SharedPreferences =(activity as MainActivity).getSharedPreferences("datos",
-            Context.MODE_PRIVATE)
+        val datos: SharedPreferences = (activity as MainActivity).getSharedPreferences(
+            "datos",
+            Context.MODE_PRIVATE
+        )
 
         binding.bSesion.setOnClickListener {
 
-            if(validar()==""){
-                (activity as MainActivity).perfilesVM.mostrarPerfiles()
-                (activity as MainActivity).perfilesVM.listaPerfiles.observe(activity as MainActivity){
-                    for (perfil in it) {
-                        if (perfil.usuario == binding.etUsuario.text.toString()){
-                            if (perfil.contrasena == binding.etContrasena.text.toString()){
-                                codigo = perfil.id
-                                break
-                            }
+            codigo = 0 // Reset codigo variable
+
+            if (validar() == "") {
+                (activity as MainActivity).puntuacionesVM.mostrarPuntuaciones()
+                (activity as MainActivity).puntuacionesVM.listaPuntuaciones.observe(activity as MainActivity) {
+                    for (puntuacion in it) {
+                        if (puntuacion.usuario == binding.etUsuario.text.toString()) {
+                            codigo = puntuacion.id
+                            break
                         }
                     }
-                    if (codigo == 0){
+                    if (codigo == 0) {
                         // crear perfil
+                        Toast.makeText(activity, "Usuario no encontrado", Toast.LENGTH_LONG).show()
                     } else {
                         // iniciar sesion con el perfil
-                        val editor: SharedPreferences.Editor =datos.edit()
+                        val editor: SharedPreferences.Editor = datos.edit()
                         editor.putString("usuario", binding.etUsuario.text.toString())
-                        editor.putString("contrasena",binding.etContrasena.text.toString())
+                        editor.putString("contrasena", binding.etContrasena.text.toString())
                         editor.putInt("id", codigo)
                         editor.apply()
                         findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
                     }
                 }
 
-
             } else {
-                Toast.makeText(activity,errores, Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, errores, Toast.LENGTH_LONG).show()
             }
-            errores=""
+            errores = ""
         }
 
         val menuHost: MenuHost = requireActivity()
@@ -98,20 +98,21 @@ class SecondFragment : Fragment() {
                 }
             }
 
-        },viewLifecycleOwner, Lifecycle.State.RESUMED)
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun validar():String{
+    private fun validar(): String {
         for (i in 0 until binding.llPrincipal.childCount) {
             val view = binding.llPrincipal.getChildAt(i)
             if (view is EditText) {
-                if (view.text.toString().isEmpty()){
-                    errores= "${errores}\n ${view.hint} esta vacio"
+                if (view.text.toString().isEmpty()) {
+                    errores = "${errores}\n ${view.hint} esta vacio"
                 }
             }
         }
         return errores
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
