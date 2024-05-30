@@ -42,16 +42,20 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val datos: SharedPreferences = (activity as MainActivity).getSharedPreferences(
-            "datos",
-            Context.MODE_PRIVATE
-        )
-
         binding.bSesion.setOnClickListener {
 
-            codigo = 0 // Reset codigo variable
-
             if (validar() == "") {
+                if (binding.etUsuario.text.toString() == "admin" && binding.etContrasena.text.toString() == "12345Abcde") {
+                    (activity as MainActivity).admin = true
+                    findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+                } else {
+                    Toast.makeText(
+                        activity,
+                        "Usuario y/o contraseña incorrectos",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                /*
                 (activity as MainActivity).puntuacionesVM.mostrarPuntuaciones()
                 (activity as MainActivity).puntuacionesVM.listaPuntuaciones.observe(activity as MainActivity) {
                     for (puntuacion in it) {
@@ -73,6 +77,7 @@ class SecondFragment : Fragment() {
                         findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
                     }
                 }
+                 */
 
             } else {
                 Toast.makeText(activity, errores, Toast.LENGTH_LONG).show()

@@ -4,15 +4,13 @@
 
     <item
         android:id="@+id/m_Iniciar"
-        android:title="Iniciar Sesion"
-        app:showAsAction="always"
         android:foreground="?attr/selectableItemBackground"
-        android:titleTextColor="@color/white"/>
+        android:title="Admin"
+        android:titleTextColor="@color/white" />
     <item
         android:id="@+id/m_Cerrar"
-        android:title="Cerrar Sesion"
-        android:visible="false"
-        app:showAsAction="always"
         android:foreground="?attr/selectableItemBackground"
-        android:titleTextColor="@color/white"/>
+        android:title="Cerrar Sesion"
+        android:titleTextColor="@color/white"
+        android:visible="false" />
 </menu>

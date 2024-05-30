@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     val preguntasVM: PreguntasVM by viewModels { PreguntasViewModelFactory(miRepositorio) }
     val puntuacionesVM: PuntuacionesVM by viewModels { PuntuacionesViewModelFactory(miRepositorio) }
     var puntuaciones: MutableList<Puntuacion> = mutableListOf()
+    var admin: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayShowTitleEnabled(false)

@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.trivial.databinding.FragmentFirstBinding
@@ -89,11 +90,12 @@ class FirstFragment : Fragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        if (comprobarSesion()){
-            binding.tBienvenida.text = "¡Bienvenid@!" // ${it.usuario} --> ya no funciona
+        if ((activity as MainActivity).admin){
+            binding.tBienvenida.text = "¡Bienvenid@ Admin!"
+            binding.bPreguntas.isVisible = true
         } else {
-            binding.tBienvenida.text = "No has iniciado sesion" // ${it.usuario} --> ya no funciona
-
+            binding.tBienvenida.text = "¡Bienvenid@ a Trivial!"
+            binding.bPreguntas.isVisible = false
         }
 
         binding.bJugar.setOnClickListener {
