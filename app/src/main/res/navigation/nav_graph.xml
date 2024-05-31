@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/firstFragment"
         android:name="com.example.trivial.FirstFragment"
-        android:label="fragment_first"
+        android:label="Inicio"
         tools:layout="@layout/fragment_first" >
         <action
             android:id="@+id/action_firstFragment_to_loginFragment"
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.trivial.LoginFragment"
-        android:label="fragment_login"
+        android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_firstFragment"
@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/puntuacionesFragment"
         android:name="com.example.trivial.PuntuacionesFragment"
-        android:label="fragment_puntuaciones"
+        android:label="Puntuaciones"
         tools:layout="@layout/fragment_puntuaciones" >
         <action
             android:id="@+id/action_puntuacionesFragment_to_firstFragment"
@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/datosFragment"
         android:name="com.example.trivial.DatosFragment"
-        android:label="fragment_datos"
+        android:label="Trivial"
         tools:layout="@layout/fragment_datos" >
         <action
             android:id="@+id/action_datosFragment_to_firstFragment"
