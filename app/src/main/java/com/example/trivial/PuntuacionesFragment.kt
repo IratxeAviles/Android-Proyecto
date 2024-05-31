@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.trivial.databinding.FragmentFourthBinding
+import com.example.trivial.databinding.FragmentPuntuacionesBinding
 
 
 class PuntuacionesFragment : Fragment() {
-    private var _binding: FragmentFourthBinding? = null
+    private var _binding: FragmentPuntuacionesBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,7 +22,7 @@ class PuntuacionesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentFourthBinding.inflate(inflater, container, false)
+        _binding = FragmentPuntuacionesBinding.inflate(inflater, container, false)
         return binding.root
 
     }

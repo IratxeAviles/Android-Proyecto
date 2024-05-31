@@ -47,13 +47,8 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val datos: SharedPreferences =
-            (activity as MainActivity).getSharedPreferences("datos", Context.MODE_PRIVATE)
-        if (datos.getString("usuario", "")?.isNotEmpty() ?: false &&
-            datos.getString("password", "")?.isNotEmpty() ?: false
-        ) {
-            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
+        val admin:SharedPreferences=(activity as MainActivity).getSharedPreferences("isAdmin",Context.MODE_PRIVATE)
+        val isAdmin = admin.getBoolean("admin", false)
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
@@ -67,12 +62,12 @@ class FirstFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.m_Iniciar -> {
-                        inicioSesion()
+                        inicioSesion(admin)
                         true
                     }
 
                     R.id.m_Cerrar -> {
-                        cerrarSesion(datos)
+                        cerrarSesion(admin)
                         true
                     }
 
@@ -82,50 +77,40 @@ class FirstFragment : Fragment() {
 
             override fun onPrepareMenu(menu: Menu) {
                 super.onPrepareMenu(menu)
+
+
                 menu.findItem(R.id.m_volver).isVisible = false
 
-                val isLoggedIn = comprobarSesion()
-                menu.findItem(R.id.m_Iniciar).isVisible = !isLoggedIn
-                menu.findItem(R.id.m_LogOut).isVisible = isLoggedIn
+                menu.findItem(R.id.m_Iniciar).isVisible = !isAdmin
+                menu.findItem(R.id.m_LogOut).isVisible = isAdmin
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        if ((activity as MainActivity).admin){
+        if (isAdmin) {
             binding.tBienvenida.text = "¡Bienvenid@ Admin!"
-            binding.bPreguntas.isVisible = true
         } else {
             binding.tBienvenida.text = "¡Bienvenid@ a Trivial!"
-            binding.bPreguntas.isVisible = false
         }
 
         binding.bJugar.setOnClickListener {
-            if (comprobarSesion()) {
-                findNavController().navigate(R.id.action_FirstFragment_to_thirdFragment)
-            } else {
-                Toast.makeText(activity, "No has iniciado sesion", Toast.LENGTH_LONG).show()
-            }
+            findNavController().navigate(R.id.action_firstFragment_to_datosFragment)
         }
 
         binding.bPuntuacion.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_fourthFragment)
+            findNavController().navigate(R.id.action_firstFragment_to_puntuacionesFragment)
         }
     }
 
-    private fun comprobarSesion(): Boolean {
-        val datos: SharedPreferences =
-            (activity as MainActivity).getSharedPreferences("datos", Context.MODE_PRIVATE)
-
-        return datos.getBoolean("is_logged_in", false)
+    fun inicioSesion(admin: SharedPreferences) {
+        val editor: SharedPreferences.Editor = admin.edit()
+        editor.putBoolean("admin", true)
+        editor.apply()
+        findNavController().navigate(R.id.action_firstFragment_to_loginFragment)
     }
 
-    fun inicioSesion() {
-        findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-    }
-
-    fun cerrarSesion(datos: SharedPreferences) {
-        val editor: SharedPreferences.Editor = datos.edit()
-        editor.putString("usuario", "")
-        editor.putString("password", "")
+    fun cerrarSesion(admin: SharedPreferences) {
+        val editor: SharedPreferences.Editor = admin.edit()
+        editor.putBoolean("admin", false)
         editor.apply()
     }
 

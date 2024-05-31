@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
     val preguntasVM: PreguntasVM by viewModels { PreguntasViewModelFactory(miRepositorio) }
     val puntuacionesVM: PuntuacionesVM by viewModels { PuntuacionesViewModelFactory(miRepositorio) }
     var puntuaciones: MutableList<Puntuacion> = mutableListOf()
-    var admin: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -69,17 +68,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun cerrarSesion() {
+        val admin: SharedPreferences =
+            this.getSharedPreferences("admin",Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor =admin.edit()
+        editor.putBoolean("isAdmin", false)
+        editor.apply()
+
+        /*
         val datos: SharedPreferences =this.getSharedPreferences("datos",
+
             Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor =datos.edit()
         editor.putString("usuario","")
         editor.putString("contrasena","")
         editor.apply()
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        navController.popBackStack(R.id.FirstFragment, false)
-        navController.navigate(R.id.FirstFragment)
-
+        navController.popBackStack(R.id.loginFragment, false)
+        navController.navigate(R.id.loginFragment)
+         */
     }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)

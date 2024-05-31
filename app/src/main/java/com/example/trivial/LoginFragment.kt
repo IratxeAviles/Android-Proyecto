@@ -1,5 +1,7 @@
 package com.example.trivial
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,14 +16,14 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.trivial.databinding.FragmentSecondBinding
+import com.example.trivial.databinding.FragmentLoginBinding
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class LoginFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private var errores: String = ""
     private var codigo: Int = 0
@@ -31,7 +33,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -43,8 +45,11 @@ class LoginFragment : Fragment() {
 
             if (validar() == "") {
                 if (binding.etUsuario.text.toString() == "admin" && binding.etContrasena.text.toString() == "12345Abcde") {
-                    (activity as MainActivity).admin = true
-                    findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+                    val administrador: SharedPreferences = requireActivity().getSharedPreferences("administrador", Context.MODE_PRIVATE)
+                    val editor: SharedPreferences.Editor = administrador.edit()
+                    editor.putBoolean("admin", true)
+                    editor.apply()
+                    findNavController().navigate(R.id.action_loginFragment_to_firstFragment)
                 } else {
                     Toast.makeText(
                         activity,

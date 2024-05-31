@@ -1,4 +1,4 @@
-package com.example.trivial.recyclerView
+package com.example.trivial.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,7 +18,7 @@ class Adaptador(val lista: MutableList<Puntuacion>) : RecyclerView.Adapter<Adapt
             binding.llRecyclerItem.setOnClickListener {
                 val bundle = bundleOf("id" to id)
                 binding.llRecyclerItem.findNavController()
-                    .navigate(R.id.action_fourthFragment_to_datosFragment, bundle)
+                    .navigate(R.id.action_puntuacionesFragment_to_firstFragment, bundle)
             }
         }
     }
@@ -32,8 +32,8 @@ class Adaptador(val lista: MutableList<Puntuacion>) : RecyclerView.Adapter<Adapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.tUsuario.text = lista[position].usuario
-        holder.binding.tPuntuacion.text = lista[position].record.toString()
+        holder.binding.tvUsuario.text = lista[position].usuario
+        holder.binding.tvPuntuacion.text = lista[position].record.toString()
         holder.id = lista[position].id
     }
 
