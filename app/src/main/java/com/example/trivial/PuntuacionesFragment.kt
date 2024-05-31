@@ -5,13 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ejercicio6.recyclerView.Adaptador
 import com.example.trivial.databinding.FragmentFourthBinding
 
 
-class FourthFragment : Fragment() {
+class PuntuacionesFragment : Fragment() {
     private var _binding: FragmentFourthBinding? = null
 
     // This property is only valid between onCreateView and
