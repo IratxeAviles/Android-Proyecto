@@ -3,54 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
-
+    app:startDestination="@id/firstFragment">
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/firstFragment"
         android:name="com.example.trivial.FirstFragment"
-        android:label="Inicio"
-        tools:layout="@layout/fragment_first">
-
+        android:label="fragment_first"
+        tools:layout="@layout/fragment_first" >
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_firstFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_FirstFragment_to_thirdFragment"
-            app:destination="@id/thirdFragment" />
+            android:id="@+id/action_firstFragment_to_puntuacionesFragment"
+            app:destination="@id/puntuacionesFragment" />
         <action
-            android:id="@+id/action_FirstFragment_to_fourthFragment"
-            app:destination="@id/fourthFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.trivial.SecondFragment"
-        android:label=""
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/thirdFragment"
-        android:name="com.example.trivial.ThirdFragment"
-        android:label=""
-        tools:layout="@layout/fragment_third" >
-        <action
-            android:id="@+id/action_thirdFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/fourthFragment"
-        android:name="com.example.trivial.FourthFragment"
-        android:label="fragment_fourth"
-        tools:layout="@layout/fragment_fourth" >
-        <action
-            android:id="@+id/action_fourthFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-        <action
-            android:id="@+id/action_fourthFragment_to_datosFragment"
+            android:id="@+id/action_firstFragment_to_datosFragment"
             app:destination="@id/datosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.trivial.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/puntuacionesFragment"
+        android:name="com.example.trivial.PuntuacionesFragment"
+        android:label="fragment_puntuaciones"
+        tools:layout="@layout/fragment_puntuaciones" >
+        <action
+            android:id="@+id/action_puntuacionesFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
     </fragment>
     <fragment
         android:id="@+id/datosFragment"
@@ -58,7 +43,7 @@
         android:label="fragment_datos"
         tools:layout="@layout/fragment_datos" >
         <action
-            android:id="@+id/action_datosFragment_to_fourthFragment"
-            app:destination="@id/fourthFragment" />
+            android:id="@+id/action_datosFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
     </fragment>
 </navigation>

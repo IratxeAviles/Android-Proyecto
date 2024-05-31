@@ -1,4 +1,4 @@
-package com.example.ejercicio6.recyclerView
+package com.example.trivial.recyclerView
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
