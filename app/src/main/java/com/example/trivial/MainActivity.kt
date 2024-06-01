@@ -26,11 +26,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    val miDataBase by lazy { BBDD.getDatabase(this)}
+    val miDataBase by lazy { BBDD.getDatabase(this) }
     val miRepositorio by lazy { Repositorio(miDataBase.miDAO()) }
     val preguntasVM: PreguntasVM by viewModels { PreguntasViewModelFactory(miRepositorio) }
     val puntuacionesVM: PuntuacionesVM by viewModels { PuntuacionesViewModelFactory(miRepositorio) }
-    var puntuaciones: MutableList<Puntuacion> = mutableListOf()
+    val puntos:SharedPreferences=this.getSharedPreferences("puntos",Context.MODE_PRIVATE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -57,10 +57,12 @@ class MainActivity : AppCompatActivity() {
                 findNavController(R.id.nav_host_fragment_content_main).popBackStack()
                 true
             }
+
             R.id.m_LogOut -> {
                 cerrarSesion()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
 
 
@@ -68,24 +70,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun cerrarSesion() {
-        val admin: SharedPreferences =
-            this.getSharedPreferences("admin",Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor =admin.edit()
+        val administrador: SharedPreferences = this.getSharedPreferences("isAdmin", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = administrador.edit()
         editor.putBoolean("isAdmin", false)
         editor.apply()
-
-        /*
-        val datos: SharedPreferences =this.getSharedPreferences("datos",
-
-            Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor =datos.edit()
-        editor.putString("usuario","")
-        editor.putString("contrasena","")
-        editor.apply()
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        navController.popBackStack(R.id.loginFragment, false)
-        navController.navigate(R.id.loginFragment)
-         */
+        findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.firstFragment)
     }
 
     override fun onSupportNavigateUp(): Boolean {

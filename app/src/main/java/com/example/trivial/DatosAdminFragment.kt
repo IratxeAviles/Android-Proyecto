@@ -9,13 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import com.example.trivial.databinding.FragmentDatosBinding
 import com.example.trivial.modelo.Pregunta
 import android.widget.Toast
+import com.example.trivial.databinding.FragmentDatosadminBinding
 
 
 class DatosAdminFragment : Fragment() {
-    private var _binding: FragmentDatosBinding? = null
+    private var _binding: FragmentDatosadminBinding? = null
 
     private val binding get() = _binding!!
     lateinit var miPregunta: Pregunta
@@ -27,7 +27,7 @@ class DatosAdminFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentDatosBinding.inflate(inflater, container, false)
+        _binding = FragmentDatosadminBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -69,7 +69,7 @@ class DatosAdminFragment : Fragment() {
                 binding.etR1.setText(miPregunta.respuesta1)
                 binding.etR2.setText(miPregunta.respuesta2)
                 binding.etR3.setText(miPregunta.respuesta3)
-                binding.etR4.setText(miPregunta.correcta)
+                binding.etCorrecta.setText(miPregunta.correcta)
             }
 
         }
@@ -94,7 +94,7 @@ class DatosAdminFragment : Fragment() {
                 respuesta1 = binding.etR1.text.toString(),
                 respuesta2 = binding.etR2.text.toString(),
                 respuesta3 = binding.etR3.text.toString(),
-                correcta = binding.etR4.text.toString(),
+                correcta = binding.etCorrecta.text.toString(),
             )
         )
         Toast.makeText(activity, "Pregunta insertada", Toast.LENGTH_LONG).show()
@@ -108,7 +108,7 @@ class DatosAdminFragment : Fragment() {
                 respuesta1 = binding.etR1.text.toString(),
                 respuesta2 = binding.etR2.text.toString(),
                 respuesta3 = binding.etR3.text.toString(),
-                correcta = binding.etR4.text.toString(),
+                correcta = binding.etCorrecta.text.toString(),
             )
         )
         Toast.makeText(activity, "Pelicula modificada", Toast.LENGTH_LONG).show()
@@ -127,7 +127,7 @@ class DatosAdminFragment : Fragment() {
             binding.etR1.text.isEmpty() or
             binding.etR2.text.isEmpty() or
             binding.etR3.text.isEmpty() or
-            binding.etR4.text.isEmpty()
+            binding.etCorrecta.text.isEmpty()
         ) {
             Toast.makeText(activity, "Hay que rellenar todos los datos", Toast.LENGTH_LONG).show()
             return false

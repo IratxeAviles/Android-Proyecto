@@ -8,11 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:layout_marginTop="160dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="161dp">
+        android:gravity="center_horizontal">
 
         <EditText
             android:id="@+id/etPregunta"
@@ -25,19 +23,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:textColor="@color/white">
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/bR1"
+            <EditText
+                android:id="@+id/etR1"
                 android:layout_width="175dp"
                 android:layout_height="48dp"
                 android:layout_margin="16dp"
                 android:hint="Respuesta 1"
                 android:inputType="text" />
 
-            <Button
-                android:id="@+id/bR2"
+            <EditText
+                android:id="@+id/etR2"
                 android:layout_width="175dp"
                 android:layout_height="48dp"
                 android:layout_margin="16dp"
@@ -49,24 +46,46 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:textColor="@color/white">
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/bR3"
+            <EditText
+                android:id="@+id/etR3"
                 android:layout_width="175dp"
                 android:layout_height="48dp"
                 android:layout_margin="16dp"
                 android:hint="Respuesta 3"
                 android:inputType="text" />
 
-            <Button
-                android:id="@+id/bR4"
+            <EditText
+                android:id="@+id/etCorrecta"
                 android:layout_width="175dp"
                 android:layout_height="48dp"
                 android:layout_margin="16dp"
                 android:hint="Correcta"
                 android:inputType="text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/bInsertar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="22dp"
+                android:text="Insertar" />
+
+            <Button
+                android:id="@+id/bCancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="22dp"
+                android:text="Cancelar" />
 
         </LinearLayout>
 

@@ -21,9 +21,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.trivial.databinding.FragmentFirstBinding
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class FirstFragment : Fragment() {
     private var _binding: FragmentFirstBinding? = null
 
@@ -47,8 +44,9 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val admin:SharedPreferences=(activity as MainActivity).getSharedPreferences("isAdmin",Context.MODE_PRIVATE)
-        val isAdmin = admin.getBoolean("admin", false)
+        val administrador: SharedPreferences =
+            (activity as MainActivity).getSharedPreferences("isAdmin", Context.MODE_PRIVATE)
+        val isAdmin = administrador.getBoolean("isAdmin", false)
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
@@ -62,12 +60,12 @@ class FirstFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.m_Iniciar -> {
-                        inicioSesion(admin)
+                        findNavController().navigate(R.id.action_firstFragment_to_loginFragment)
                         true
                     }
 
                     R.id.m_Cerrar -> {
-                        cerrarSesion(admin)
+                        (activity as MainActivity).cerrarSesion()
                         true
                     }
 
@@ -88,30 +86,29 @@ class FirstFragment : Fragment() {
 
         if (isAdmin) {
             binding.tBienvenida.text = "¡Bienvenid@ Admin!"
+            binding.bJugar.isVisible = false
+            binding.bPuntuacion.isVisible = false
+            binding.bNuevaPregunta.isVisible = true
+            binding.bModificarPregunta.isVisible = true
         } else {
             binding.tBienvenida.text = "¡Bienvenid@ a Trivial!"
+            binding.bJugar.isVisible = true
+            binding.bPuntuacion.isVisible = true
+            binding.bNuevaPregunta.isVisible = false
+            binding.bModificarPregunta.isVisible = false
         }
-
+        binding.bNuevaPregunta.setOnClickListener {
+            findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
+        }
+        binding.bModificarPregunta.setOnClickListener {
+            findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
+        }
         binding.bJugar.setOnClickListener {
-            findNavController().navigate(R.id.action_firstFragment_to_datosFragment)
+            findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
         }
-
         binding.bPuntuacion.setOnClickListener {
             findNavController().navigate(R.id.action_firstFragment_to_puntuacionesFragment)
         }
-    }
-
-    fun inicioSesion(admin: SharedPreferences) {
-        val editor: SharedPreferences.Editor = admin.edit()
-        editor.putBoolean("admin", true)
-        editor.apply()
-        findNavController().navigate(R.id.action_firstFragment_to_loginFragment)
-    }
-
-    fun cerrarSesion(admin: SharedPreferences) {
-        val editor: SharedPreferences.Editor = admin.edit()
-        editor.putBoolean("admin", false)
-        editor.apply()
     }
 
     override fun onDestroyView() {

@@ -18,46 +18,76 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.trivial.databinding.FragmentLoginBinding
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private var errores: String = ""
-    private var codigo: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val administrador:SharedPreferences=(activity as MainActivity).getSharedPreferences("isAdmin",Context.MODE_PRIVATE)
 
         binding.bSesion.setOnClickListener {
-
-            if (validar() == "") {
+            if (validar().isEmpty()) {
                 if (binding.etUsuario.text.toString() == "admin" && binding.etContrasena.text.toString() == "12345Abcde") {
-                    val administrador: SharedPreferences = requireActivity().getSharedPreferences("administrador", Context.MODE_PRIVATE)
                     val editor: SharedPreferences.Editor = administrador.edit()
-                    editor.putBoolean("admin", true)
+                    editor.putBoolean("isAdmin", true)
                     editor.apply()
                     findNavController().navigate(R.id.action_loginFragment_to_firstFragment)
                 } else {
-                    Toast.makeText(
-                        activity,
-                        "Usuario y/o contraseña incorrectos",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(activity, "Usuario y/o contraseña incorrectos", Toast.LENGTH_LONG).show()
                 }
-                /*
+            } else {
+                Toast.makeText(activity, errores, Toast.LENGTH_LONG).show()
+            }
+            errores = ""
+        }
+
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_fragment_second, menu)
+                menu.findItem(R.id.m_LogOut).isVisible = false
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun validar(): String {
+        for (i in 0 until binding.llPrincipal.childCount) {
+            val view = binding.llPrincipal.getChildAt(i)
+            if (view is EditText) {
+                if (view.text.toString().isEmpty()) {
+                    errores += "\n ${view.hint} está vacío"
+                }
+            }
+        }
+        return errores
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}
+
+
+
+/*
                 (activity as MainActivity).puntuacionesVM.mostrarPuntuaciones()
                 (activity as MainActivity).puntuacionesVM.listaPuntuaciones.observe(activity as MainActivity) {
                     for (puntuacion in it) {
@@ -80,48 +110,3 @@ class LoginFragment : Fragment() {
                     }
                 }
                  */
-
-            } else {
-                Toast.makeText(activity, errores, Toast.LENGTH_LONG).show()
-            }
-            errores = ""
-        }
-
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(object : MenuProvider {
-
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_fragment_second, menu)
-                menu.findItem(R.id.m_LogOut).isVisible = false
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    // R.id.mf_mi_insertar -> {
-                    //     insertar()
-                    //     true
-                    // }
-                    else -> false
-                }
-            }
-
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
-
-    private fun validar(): String {
-        for (i in 0 until binding.llPrincipal.childCount) {
-            val view = binding.llPrincipal.getChildAt(i)
-            if (view is EditText) {
-                if (view.text.toString().isEmpty()) {
-                    errores = "${errores}\n ${view.hint} esta vacio"
-                }
-            }
-        }
-        return errores
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-}

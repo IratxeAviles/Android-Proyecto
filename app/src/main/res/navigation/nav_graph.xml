@@ -18,6 +18,12 @@
         <action
             android:id="@+id/action_firstFragment_to_datosFragment"
             app:destination="@id/datosFragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_trivialFragment"
+            app:destination="@id/trivialFragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_nuevaPreguntaFragment"
+            app:destination="@id/nuevaPreguntaFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -44,6 +50,22 @@
         tools:layout="@layout/fragment_datosadmin" >
         <action
             android:id="@+id/action_datosFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trivialFragment"
+        android:name="com.example.trivial.TrivialFragment"
+        android:label="TrivialFragment" >
+        <action
+            android:id="@+id/action_trivialFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nuevaPreguntaFragment"
+        android:name="com.example.trivial.NuevaPreguntaFragment"
+        android:label="NuevaPreguntaFragment" >
+        <action
+            android:id="@+id/action_nuevaPreguntaFragment_to_firstFragment"
             app:destination="@id/firstFragment" />
     </fragment>
 </navigation>

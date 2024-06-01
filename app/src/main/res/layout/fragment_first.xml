@@ -29,6 +29,24 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
+            android:id="@+id/bNuevaPregunta"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:padding="16dp"
+            android:text="Nueva Pregunta"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/bModificarPregunta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:padding="16dp"
+            android:text="Modificar Pregunta"
+            android:textSize="16sp" />
+
+        <Button
             android:id="@+id/bJugar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

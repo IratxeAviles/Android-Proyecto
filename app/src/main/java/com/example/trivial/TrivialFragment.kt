@@ -7,59 +7,72 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
 import com.example.trivial.modelo.Pregunta
-import android.widget.Toast
-import com.example.trivial.databinding.FragmentDatosadminBinding
+import com.example.trivial.databinding.FragmentTrivialBinding
 
-
-class DatosadminFragment : Fragment() {
-    private var _binding: FragmentDatosadminBinding? = null
+class TrivialFragment : Fragment() {
+    private var _binding: FragmentTrivialBinding? = null
 
     private val binding get() = _binding!!
     lateinit var miPregunta: Pregunta
     var idPregunta: Int = -1
-
+    private var correctAnswerPosition: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentDatosadminBinding.inflate(inflater, container, false)
+    ): View {
+        _binding = FragmentTrivialBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val puntos: SharedPreferences = (activity as MainActivity).getSharedPreferences("puntos", Context.MODE_PRIVATE)
+
         idPregunta = arguments?.getInt("id") ?: -1
 
+        binding.bR1.setOnClickListener { siguiente(0, puntos) }
+        binding.bR2.setOnClickListener { siguiente(1, puntos) }
+        binding.bR3.setOnClickListener { siguiente(2, puntos) }
+        binding.bR4.setOnClickListener { siguiente(3, puntos) }
+
+        preguntaNueva()
+    }
+
+    fun preguntaNueva() {
         (activity as MainActivity).preguntasVM.buscarPreguntaPorId(idPregunta)
-        (activity as MainActivity).preguntasVM.pregunta.observe(activity as MainActivity) {
-            miPregunta = it
+        (activity as MainActivity).preguntasVM.pregunta.observe(viewLifecycleOwner) { pregunta ->
+            miPregunta = pregunta
             binding.etPregunta.setText(miPregunta.pregunta)
-            binding.etR1.setText(miPregunta.respuesta1)
-            binding.etR2.setText(miPregunta.respuesta2)
-            binding.etR3.setText(miPregunta.respuesta3)
-            binding.etR4.setText(miPregunta.correcta)
+
+            val respuestas = listOf(
+                miPregunta.respuesta1,
+                miPregunta.respuesta2,
+                miPregunta.respuesta3,
+                miPregunta.correcta
+            ).shuffled()
+
+            correctAnswerPosition = respuestas.indexOf(miPregunta.correcta)
+
+            binding.bR1.setText(respuestas[0])
+            binding.bR2.setText(respuestas[1])
+            binding.bR3.setText(respuestas[2])
+            binding.bR4.setText(respuestas[3])
+        }
+    }
+
+    fun siguiente(respuesta: Int, puntos: SharedPreferences) {
+        val editor = puntos.edit()
+        if (respuesta == correctAnswerPosition) {
+            val currentPoints = puntos.getInt("puntos", 0)
+            editor.putInt("puntos", currentPoints + 1)
+            editor.apply()
         }
 
-        binding.b.setOnClickListener {
-
-        }
-        binding.bModificar.setOnClickListener {
-
-        }
-        binding.bBorrar.setOnClickListener {
-
-        }
-        binding.bBorrar.setOnClickListener {
-
-        }
-
+        idPregunta++
+        preguntaNueva()
     }
 
     override fun onDestroyView() {
