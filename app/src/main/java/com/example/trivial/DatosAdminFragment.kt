@@ -47,7 +47,7 @@ class DatosAdminFragment : Fragment() {
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Add menu items here
-                menuInflater.inflate(R.menu.menu_fragment_fourth, menu)
+                menuInflater.inflate(R.menu.menu_fragment_datos, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
