@@ -23,6 +23,11 @@ class PreguntasVM(private val miRepositorio: Repositorio) : ViewModel() {
     }
 
     @WorkerThread
+    fun modificarPregunta(miPregunta: Pregunta) = viewModelScope.launch{
+        miRepositorio.modificarPregunta(miPregunta)
+    }
+
+    @WorkerThread
     fun borrarPregunta(miPregunta: Pregunta) = viewModelScope.launch {
         miRepositorio.borrarPregunta(miPregunta)
     }

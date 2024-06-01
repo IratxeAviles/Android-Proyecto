@@ -10,7 +10,7 @@ import com.example.trivial.bbdd.Repositorio
 import kotlinx.coroutines.launch
 
 class PuntuacionesVM(private val miRepositorio: Repositorio) : ViewModel() {
-    // val listaPuntuaciones = MutableLiveData<List<Pelicula>>() // primera manera: por si hay posibilidad de no recibir datos
+    // val listaPuntuaciones = MutableLiveData<List<Puntuacion>>() // primera manera: por si hay posibilidad de no recibir datos
     lateinit var listaPuntuaciones: LiveData<List<Puntuacion>>
     lateinit var puntuacion: LiveData<Puntuacion> // segunda manera: se puede usar si sabes que va a haber dato si o si
 
@@ -21,6 +21,11 @@ class PuntuacionesVM(private val miRepositorio: Repositorio) : ViewModel() {
     @WorkerThread
     fun insertarPuntuacion(miPuntuacion: Puntuacion) = viewModelScope.launch {
         miRepositorio.insertarPuntuacion(miPuntuacion)
+    }
+
+    @WorkerThread
+    fun modificarPuntuacion(miPuntuacion: Puntuacion) = viewModelScope.launch {
+        miRepositorio.modificarPuntuacion(miPuntuacion)
     }
 
     @WorkerThread

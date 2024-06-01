@@ -39,9 +39,9 @@
     </fragment>
     <fragment
         android:id="@+id/datosFragment"
-        android:name="com.example.trivial.DatosFragment"
+        android:name="com.example.trivial.DatosAdminFragment"
         android:label="Trivial"
-        tools:layout="@layout/fragment_datos" >
+        tools:layout="@layout/fragment_datosadmin" >
         <action
             android:id="@+id/action_datosFragment_to_firstFragment"
             app:destination="@id/firstFragment" />

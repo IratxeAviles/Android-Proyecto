@@ -18,11 +18,11 @@ interface DAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertarPuntuacion(miPuntuacion: Puntuacion)
 
-    @Delete
-    suspend fun borrarPuntuacion(miPuntuacion: Puntuacion)
-
     @Update
     suspend fun modificarPuntuacion(miPuntuacion: Puntuacion)
+
+    @Delete
+    suspend fun borrarPuntuacion(miPuntuacion: Puntuacion)
 
     @Query("SELECT * FROM tabla_puntuaciones where id like :id")
     fun buscarPuntuacionPorId(id: Int): Flow<Puntuacion>
@@ -33,33 +33,13 @@ interface DAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertarPregunta(miPregunta: Pregunta)
 
+    @Update
+    suspend fun modificarPregunta(miPregunta: Pregunta)
+
     @Delete
     suspend fun borrarPregunta(miPregunta: Pregunta)
 
-    @Update
-    suspend fun modificarPerfil(miPregunta: Pregunta)
 
     @Query("SELECT * FROM tabla_preguntas where id like :id")
     fun buscarPreguntaPorId(id: Int): Flow<Pregunta>
 }
-
-/*
-@Query("SELECT * FROM puntuaciones ORDER BY puntuacion ASC")
-    fun mostrarPuntuaciones(): Flow<List<Puntuacion>>
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertar(miPuntuacion: Puntuacion)
-
-    @Delete
-    suspend fun borrar(miPuntuacion: Puntuacion)
-
-    @Update
-    suspend fun modificar(miPuntuacion: Puntuacion)
-
-    @Query("SELECT * FROM Puntuaciones where id like :id")
-    fun buscarPorPerfil(id: Int): Flow<Perfil>
-@Dao
-interface DAO {
-
-}
- */

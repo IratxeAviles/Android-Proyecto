@@ -9,7 +9,7 @@ import com.example.trivial.R
 import com.example.trivial.databinding.RecyclerviewItemBinding
 import com.example.trivial.modelo.Puntuacion
 
-class Adaptador(val lista: MutableList<Puntuacion>) : RecyclerView.Adapter<Adaptador.ViewHolder>() {
+class Adaptador(val lista: List<Puntuacion>) : RecyclerView.Adapter<Adaptador.ViewHolder>() {
     inner class ViewHolder(val binding: RecyclerviewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var id: Int = -1
