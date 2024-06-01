@@ -99,11 +99,14 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_firstFragment_to_nuevaPreguntaFragment)
         }
         binding.bModificarPregunta.setOnClickListener {
-            (activity as MainActivity).preguntasVM.mostrarPreguntas()
-            (activity as MainActivity).preguntasVM.listaPreguntas.observe(activity as MainActivity) {
-                if (it != null) {
-                    findNavController().navigate(R.id.action_firstFragment_to_datosFragment)
+            try {
+                (activity as MainActivity).preguntasVM.mostrarPreguntas()
+                (activity as MainActivity).preguntasVM.listaPreguntas.observe(activity as MainActivity) {
+                    if (it != null) {
+                        findNavController().navigate(R.id.action_firstFragment_to_datosFragment)
+                    }
                 }
+            } catch (e: Exception) {
                 Toast.makeText(activity, "No hay preguntas disponibles", Toast.LENGTH_SHORT).show()
             }
         }

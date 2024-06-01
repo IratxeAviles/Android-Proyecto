@@ -70,8 +70,13 @@ class DatosAdminFragment : Fragment() {
             borrar()
             mostrar()
         }
+        binding.bAnterior.setOnClickListener {
+            posPregunta -= 1
+            mostrar()
+        }
         binding.bSiguiente.setOnClickListener {
             posPregunta += 1
+            mostrar()
         }
     }
 
@@ -86,14 +91,18 @@ class DatosAdminFragment : Fragment() {
 
         listaPreguntas.observe(viewLifecycleOwner) { preguntas ->
             if (preguntas.isNotEmpty()) {
-                (activity as MainActivity).preguntasVM.buscarPreguntaPorId(preguntas[posPregunta].id)
-                (activity as MainActivity).preguntasVM.pregunta.observe(activity as MainActivity) {
-                    miPregunta = it
-                    binding.etPregunta.setText(miPregunta.pregunta)
-                    binding.etR1.setText(miPregunta.respuesta1)
-                    binding.etR2.setText(miPregunta.respuesta2)
-                    binding.etR3.setText(miPregunta.respuesta3)
-                    binding.etCorrecta.setText(miPregunta.correcta)
+                try {
+                    (activity as MainActivity).preguntasVM.buscarPreguntaPorId(preguntas[posPregunta].id)
+                    (activity as MainActivity).preguntasVM.pregunta.observe(activity as MainActivity) {
+                        miPregunta = it
+                        binding.etPregunta.setText(miPregunta.pregunta)
+                        binding.etR1.setText(miPregunta.respuesta1)
+                        binding.etR2.setText(miPregunta.respuesta2)
+                        binding.etR3.setText(miPregunta.respuesta3)
+                        binding.etCorrecta.setText(miPregunta.correcta)
+                    }
+                }catch (e: Exception){
+                    Toast.makeText(activity, "No puedes hacer eso", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 Toast.makeText(activity, "No hay preguntas disponibles", Toast.LENGTH_SHORT).show()
@@ -103,17 +112,26 @@ class DatosAdminFragment : Fragment() {
     }
 
     fun modificar() {
-        (activity as MainActivity).preguntasVM.modificarPregunta(
-            Pregunta(
-                id = miPregunta.id,
-                pregunta = binding.etPregunta.text.toString(),
-                respuesta1 = binding.etR1.text.toString(),
-                respuesta2 = binding.etR2.text.toString(),
-                respuesta3 = binding.etR3.text.toString(),
-                correcta = binding.etCorrecta.text.toString(),
+        if (binding.etPregunta.text.isEmpty() or
+            binding.etR1.text.isEmpty() or
+            binding.etR2.text.isEmpty() or
+            binding.etR3.text.isEmpty() or
+            binding.etCorrecta.text.isEmpty()
+        ) {
+            Toast.makeText(activity, "Hay que rellenar todos los datos", Toast.LENGTH_LONG).show()
+        } else {
+            (activity as MainActivity).preguntasVM.modificarPregunta(
+                Pregunta(
+                    id = miPregunta.id,
+                    pregunta = binding.etPregunta.text.toString(),
+                    respuesta1 = binding.etR1.text.toString(),
+                    respuesta2 = binding.etR2.text.toString(),
+                    respuesta3 = binding.etR3.text.toString(),
+                    correcta = binding.etCorrecta.text.toString(),
+                )
             )
-        )
-        Toast.makeText(activity, "Pregunta modificada", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "Pregunta modificada", Toast.LENGTH_LONG).show()
+        }
     }
 
     fun borrar() {
