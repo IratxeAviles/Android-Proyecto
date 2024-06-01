@@ -1,0 +1,3 @@
+Para el CRUD de las preguntas, hace falta iniciar sesion desde el menu del fragment1
+Usuario: admin
+Contraseña: 12345Abcde

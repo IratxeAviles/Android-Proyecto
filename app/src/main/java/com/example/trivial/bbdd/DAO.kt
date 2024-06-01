@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DAO {
-    @Query("SELECT * FROM tabla_puntuaciones ORDER BY id ASC")
+    @Query("SELECT * FROM tabla_puntuaciones ORDER BY usuario ASC")
     fun mostrarPuntuaciones(): Flow<List<Puntuacion>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -24,7 +24,7 @@ interface DAO {
     @Delete
     suspend fun borrarPuntuacion(miPuntuacion: Puntuacion)
 
-    @Query("SELECT * FROM tabla_puntuaciones where id like :id")
+    @Query("SELECT * FROM tabla_puntuaciones where usuario like :id")
     fun buscarPuntuacionPorId(id: Int): Flow<Puntuacion>
 
     @Query("SELECT * FROM tabla_preguntas ORDER BY id ASC")

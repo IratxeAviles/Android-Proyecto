@@ -34,7 +34,6 @@ class Adaptador(val lista: List<Puntuacion>) : RecyclerView.Adapter<Adaptador.Vi
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.tvUsuario.text = lista[position].usuario
         holder.binding.tvPuntuacion.text = lista[position].record.toString()
-        holder.id = lista[position].id
     }
 
     override fun getItemCount(): Int {

@@ -13,19 +13,23 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.trivial.modelo.Pregunta
 import com.example.trivial.databinding.FragmentTrivialBinding
+import com.example.trivial.modelo.Puntuacion
 
 class TrivialFragment : Fragment() {
     private var _binding: FragmentTrivialBinding? = null
-
     private val binding get() = _binding!!
+
     lateinit var miPregunta: Pregunta
     var posPregunta: Int = 0
     lateinit var listaPreguntas: LiveData<List<Pregunta>>
+    var puntos = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +42,10 @@ class TrivialFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val puntos: SharedPreferences =
-            (activity as MainActivity).getSharedPreferences("puntos", Context.MODE_PRIVATE)
+
+        binding.tvPuntuacion.isVisible = false
+        binding.etIntroducirNombre.isVisible = false
+        binding.bGuardarPuntuacion.isVisible = false
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
@@ -51,63 +57,94 @@ class TrivialFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 // Handle the menu selection
                 return when (menuItem.itemId) {
-
                     else -> false
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        mostrar()
+        (activity as MainActivity).preguntasVM.mostrarPreguntas()
+        listaPreguntas = (activity as MainActivity).preguntasVM.listaPreguntas
 
-        binding.bR1.setOnClickListener { siguiente(binding.bR1.text.toString(), puntos) }
-        binding.bR2.setOnClickListener { siguiente(binding.bR2.text.toString(), puntos) }
-        binding.bR3.setOnClickListener { siguiente(binding.bR3.text.toString(), puntos) }
-        binding.bR4.setOnClickListener { siguiente(binding.bR4.text.toString(), puntos) }
-
-
-    }
-
-    fun mostrar() {
-        listaPreguntas.observe(viewLifecycleOwner) { preguntas ->
+        listaPreguntas.observe(viewLifecycleOwner, Observer { preguntas ->
             if (preguntas.isNotEmpty()) {
-                try {
-                    (activity as MainActivity).preguntasVM.buscarPreguntaPorId(preguntas[posPregunta].id)
-                    (activity as MainActivity).preguntasVM.pregunta.observe(activity as MainActivity) {
-
-                        miPregunta = it
-                        binding.etPregunta.setText(miPregunta.pregunta)
-
-                        val respuestas = listOf(
-                            miPregunta.respuesta1,
-                            miPregunta.respuesta2,
-                            miPregunta.respuesta3,
-                            miPregunta.correcta
-                        ).shuffled()
-
-                        binding.bR1.setText(respuestas[0])
-                        binding.bR2.setText(respuestas[1])
-                        binding.bR3.setText(respuestas[2])
-                        binding.bR4.setText(respuestas[3])
-                    }
-                } catch (e: Exception) {
-                    Toast.makeText(activity, "No puedes hacer eso", Toast.LENGTH_SHORT).show()
-                }
+                mostrar(preguntas)
             } else {
                 Toast.makeText(activity, "No hay preguntas disponibles", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_datosFragment_to_firstFragment)
+                findNavController().navigate(R.id.action_trivialFragment_to_firstFragment)
             }
-        }
+        })
+
+        binding.bR1.setOnClickListener { siguiente(binding.bR1.text.toString()) }
+        binding.bR2.setOnClickListener { siguiente(binding.bR2.text.toString()) }
+        binding.bR3.setOnClickListener { siguiente(binding.bR3.text.toString()) }
+        binding.bR4.setOnClickListener { siguiente(binding.bR4.text.toString()) }
+        binding.bGuardarPuntuacion.setOnClickListener { guardarPuntuacion() }
     }
 
-    fun siguiente(respuesta: String, puntos: SharedPreferences) {
-        val editor = puntos.edit()
+    private fun mostrar(preguntas: List<Pregunta>) {
+        if (posPregunta >= preguntas.size) {
+            binding.etPregunta.setText("¡Has terminado!")
+            binding.bR1.isVisible = false
+            binding.bR2.isVisible = false
+            binding.bR3.isVisible = false
+            binding.bR4.isVisible = false
+            juegoterminado()
+            return
+        }
+
+        val pregunta = preguntas[posPregunta]
+        miPregunta = pregunta
+        binding.etPregunta.setText(miPregunta.pregunta)
+
+        val respuestas = listOf(
+            miPregunta.respuesta1,
+            miPregunta.respuesta2,
+            miPregunta.respuesta3,
+            miPregunta.correcta
+        ).shuffled()
+
+        binding.bR1.setText(respuestas[0])
+        binding.bR2.setText(respuestas[1])
+        binding.bR3.setText(respuestas[2])
+        binding.bR4.setText(respuestas[3])
+    }
+
+    private fun siguiente(respuesta: String) {
         if (respuesta == miPregunta.correcta) {
-            val currentPoints = puntos.getInt("puntos", 0)
-            editor.putInt("puntos", currentPoints + 1)
-            editor.apply()
+            puntos += 1
         }
         posPregunta += 1
-        mostrar()
+        listaPreguntas.value?.let { mostrar(it) }
+    }
+
+    private fun juegoterminado() {
+        binding.tvPuntuacion.setText("Puntuacion: $puntos")
+        binding.tvPuntuacion.isVisible = true
+        binding.etIntroducirNombre.isVisible = true
+        binding.bGuardarPuntuacion.isVisible = true
+    }
+
+    private fun guardarPuntuacion() {
+        if (binding.etIntroducirNombre.text.toString() != "") {
+            try {
+                (activity as MainActivity).puntuacionesVM.insertarPuntuacion(
+                    Puntuacion(
+                        usuario = binding.etIntroducirNombre.text.toString(),
+                        record = puntos,
+                    )
+                )
+                Toast.makeText(activity, "Puntuacion insertada", Toast.LENGTH_LONG).show()
+                findNavController().navigate(R.id.action_trivialFragment_to_firstFragment)
+            } catch (e: Exception) {
+                Toast.makeText(
+                    (activity as MainActivity), "Error al insertar la pregunta",
+                    Toast.LENGTH_SHORT
+                ).show()
+                print(e)
+            }
+        } else {
+            Toast.makeText(activity, "Nombre vacio", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onDestroyView() {

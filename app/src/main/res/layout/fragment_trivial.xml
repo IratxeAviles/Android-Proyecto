@@ -14,11 +14,12 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="161dp">
 
-        <EditText
+        <TextView
             android:id="@+id/etPregunta"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_margin="32dp"
+            android:textSize="24dp"
             android:hint="Pregunta"
             android:inputType="text" />
 
@@ -69,6 +70,27 @@
                 android:inputType="text" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPuntuacion"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="32dp"
+            android:gravity="center_horizontal"
+            android:textSize="24dp"
+            android:hint="Puntuacion" />
+
+        <EditText
+            android:id="@+id/etIntroducirNombre"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Introduce tu nombre para guardar la puntuacion" />
+
+        <Button
+            android:id="@+id/bGuardarPuntuacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar" />
 
     </LinearLayout>
 

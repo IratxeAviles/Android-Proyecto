@@ -101,7 +101,7 @@ class DatosAdminFragment : Fragment() {
                         binding.etR3.setText(miPregunta.respuesta3)
                         binding.etCorrecta.setText(miPregunta.correcta)
                     }
-                }catch (e: Exception){
+                } catch (e: Exception) {
                     Toast.makeText(activity, "No puedes hacer eso", Toast.LENGTH_SHORT).show()
                 }
             } else {
@@ -152,5 +152,6 @@ class DatosAdminFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        (activity as MainActivity).preguntasVM.listaPreguntas.removeObservers(activity as MainActivity)
     }
 }
