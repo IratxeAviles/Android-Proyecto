@@ -52,10 +52,8 @@ class FirstFragment : Fragment() {
         menuHost.addMenuProvider(object : MenuProvider {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                // Add menu items here
                 menuInflater.inflate(R.menu.menu_fragment_first, menu)
             }
-
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
@@ -75,7 +73,6 @@ class FirstFragment : Fragment() {
 
             override fun onPrepareMenu(menu: Menu) {
                 super.onPrepareMenu(menu)
-
 
                 menu.findItem(R.id.m_volver).isVisible = false
 
@@ -97,17 +94,35 @@ class FirstFragment : Fragment() {
             binding.bNuevaPregunta.isVisible = false
             binding.bModificarPregunta.isVisible = false
         }
+
         binding.bNuevaPregunta.setOnClickListener {
             findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
         }
         binding.bModificarPregunta.setOnClickListener {
-            findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
+            if (hayPreguntasGuardadas()) {
+                findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
+            } else {
+                Toast.makeText(activity, "No hay preguntas guardadas", Toast.LENGTH_LONG).show()
+            }
         }
         binding.bJugar.setOnClickListener {
-            findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
+            if (hayPreguntasGuardadas()) {
+                findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
+            } else {
+                Toast.makeText(activity, "No hay preguntas guardadas", Toast.LENGTH_LONG).show()
+            }
         }
         binding.bPuntuacion.setOnClickListener {
             findNavController().navigate(R.id.action_firstFragment_to_puntuacionesFragment)
+        }
+    }
+
+    private fun hayPreguntasGuardadas(): Boolean {
+        val listaPreguntas = (activity as MainActivity).preguntasVM.listaPreguntas.value
+        if (listaPreguntas.isNullOrEmpty()){
+            return false
+        } else {
+            return true
         }
     }
 
