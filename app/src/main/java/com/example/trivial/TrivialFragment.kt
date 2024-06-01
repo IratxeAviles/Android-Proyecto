@@ -15,8 +15,8 @@ class TrivialFragment : Fragment() {
 
     private val binding get() = _binding!!
     lateinit var miPregunta: Pregunta
-    var idPregunta: Int = -1
-    private var correctAnswerPosition: Int = -1
+    var idPregunta: Int = 0
+    private var correctAnswerPosition: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,7 @@ class TrivialFragment : Fragment() {
 
         val puntos: SharedPreferences = (activity as MainActivity).getSharedPreferences("puntos", Context.MODE_PRIVATE)
 
-        idPregunta = arguments?.getInt("id") ?: -1
+        idPregunta = arguments?.getInt("id") ?: 0
 
         binding.bR1.setOnClickListener { siguiente(0, puntos) }
         binding.bR2.setOnClickListener { siguiente(1, puntos) }

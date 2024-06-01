@@ -47,17 +47,25 @@ class NuevaPreguntaFragment : Fragment() {
     }
 
     fun guardar() {
-        (activity as MainActivity).preguntasVM.insertarPregunta(
-            Pregunta(
-                pregunta = binding.etPregunta.text.toString(),
-                respuesta1 = binding.etR1.text.toString(),
-                respuesta2 = binding.etR2.text.toString(),
-                respuesta3 = binding.etR3.text.toString(),
-                correcta = binding.etCorrecta.text.toString(),
+        try {
+            (activity as MainActivity).preguntasVM.insertarPregunta(
+                Pregunta(
+                    pregunta = binding.etPregunta.text.toString(),
+                    respuesta1 = binding.etR1.text.toString(),
+                    respuesta2 = binding.etR2.text.toString(),
+                    respuesta3 = binding.etR3.text.toString(),
+                    correcta = binding.etCorrecta.text.toString(),
+                )
             )
-        )
-        Toast.makeText(activity, "Pregunta insertada", Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.action_nuevaPreguntaFragment_to_firstFragment)
+            Toast.makeText(activity, "Pregunta insertada", Toast.LENGTH_LONG).show()
+            findNavController().navigate(R.id.action_nuevaPreguntaFragment_to_firstFragment)
+        } catch (e: Exception) {
+            Toast.makeText(
+                (activity as MainActivity), "Error al insertar la pregunta",
+                Toast.LENGTH_SHORT
+            ).show()
+            print(e)
+        }
     }
 
     fun validarContenido(): Boolean {

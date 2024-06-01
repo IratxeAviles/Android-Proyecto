@@ -96,20 +96,20 @@ class FirstFragment : Fragment() {
         }
 
         binding.bNuevaPregunta.setOnClickListener {
-            findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
+            findNavController().navigate(R.id.action_firstFragment_to_nuevaPreguntaFragment)
         }
         binding.bModificarPregunta.setOnClickListener {
-            if (hayPreguntasGuardadas()) {
-                findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
+            if (comprobarPreguntas()) {
+                findNavController().navigate(R.id.action_firstFragment_to_datosFragment)
             } else {
-                Toast.makeText(activity, "No hay preguntas guardadas", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "No hay preguntas disponibles", Toast.LENGTH_SHORT).show()
             }
         }
         binding.bJugar.setOnClickListener {
-            if (hayPreguntasGuardadas()) {
+            if (comprobarPreguntas()) {
                 findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
             } else {
-                Toast.makeText(activity, "No hay preguntas guardadas", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, "No hay preguntas disponibles", Toast.LENGTH_SHORT).show()
             }
         }
         binding.bPuntuacion.setOnClickListener {
@@ -117,17 +117,15 @@ class FirstFragment : Fragment() {
         }
     }
 
-    private fun hayPreguntasGuardadas(): Boolean {
-        val listaPreguntas = (activity as MainActivity).preguntasVM.listaPreguntas.value
-        if (listaPreguntas.isNullOrEmpty()){
-            return false
-        } else {
-            return true
-        }
-    }
+    fun comprobarPreguntas(): Boolean {
+        val preguntasVM = (activity as MainActivity).preguntasVM
+        preguntasVM.mostrarPreguntas()
+        val listaPreguntas = preguntasVM.listaPreguntas.value
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        return if (listaPreguntas.isNullOrEmpty()) {
+            false
+        } else {
+            true
+        }
     }
 }

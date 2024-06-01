@@ -2,6 +2,7 @@ package com.example.trivial.modelo
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -18,10 +19,18 @@ class PreguntasVM(private val miRepositorio: Repositorio) : ViewModel() {
     }
 
     @WorkerThread
-    fun insertarPregunta(miPregunta: Pregunta) = viewModelScope.launch {
-        miRepositorio.insertarPregunta(miPregunta)
-    }
-
+        fun insertarPregunta(miPregunta: Pregunta): LiveData<Boolean> {
+            val result = MutableLiveData<Boolean>()
+            viewModelScope.launch {
+                try {
+                    miRepositorio.insertarPregunta(miPregunta)
+                    result.value = true
+                } catch (e: Exception) {
+                    result.value = false
+                }
+            }
+            return result
+        }
     @WorkerThread
     fun modificarPregunta(miPregunta: Pregunta) = viewModelScope.launch{
         miRepositorio.modificarPregunta(miPregunta)

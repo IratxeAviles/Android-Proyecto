@@ -1,6 +1,7 @@
 package com.example.trivial
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,7 @@ class DatosAdminFragment : Fragment() {
 
     private val binding get() = _binding!!
     lateinit var miPregunta: Pregunta
-    var idPregunta: Int = -1
+    var idPregunta: Int = 0
 
 
     override fun onCreateView(
@@ -31,32 +32,36 @@ class DatosAdminFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        idPregunta = arguments?.getInt("id") ?: -1
+        siguiente()
 
-        if (idPregunta == -1) {
-            binding.bBorrar.isEnabled = false
-            binding.bModificar.isEnabled = false
-        } else {
-            binding.bBorrar.isEnabled = true
-            binding.bModificar.isEnabled = true
-
-            (activity as MainActivity).preguntasVM.buscarPreguntaPorId(idPregunta)
-            (activity as MainActivity).preguntasVM.pregunta.observe(activity as MainActivity) {
-                miPregunta = it
-                binding.etPregunta.setText(miPregunta.pregunta)
-                binding.etR1.setText(miPregunta.respuesta1)
-                binding.etR2.setText(miPregunta.respuesta2)
-                binding.etR3.setText(miPregunta.respuesta3)
-                binding.etCorrecta.setText(miPregunta.correcta)
-            }
-
-        }
         binding.bModificar.setOnClickListener {
-            if (validarContenido()) modificar()
-
+            if (validarContenido()) {
+                modificar()
+                siguiente()
+            }
         }
         binding.bBorrar.setOnClickListener {
             borrar()
+            siguiente()
+        }
+    }
+
+    fun siguiente() {
+        val preguntasVM = (activity as MainActivity).preguntasVM
+        preguntasVM.mostrarPreguntas()
+        val listaPreguntas = preguntasVM.listaPreguntas.value
+
+        if (!listaPreguntas.isNullOrEmpty()) {
+            miPregunta = listaPreguntas.first()
+
+            binding.etPregunta.setText(miPregunta.pregunta)
+            binding.etR1.setText(miPregunta.respuesta1)
+            binding.etR2.setText(miPregunta.respuesta2)
+            binding.etR3.setText(miPregunta.respuesta3)
+            binding.etCorrecta.setText(miPregunta.correcta)
+
+        } else {
+            Toast.makeText(activity, "No hay preguntas disponibles", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -83,7 +88,8 @@ class DatosAdminFragment : Fragment() {
 
     fun validarContenido(): Boolean {
         if (binding.etPregunta.text.isEmpty() or binding.etR1.text.isEmpty() or binding.etR2.text.isEmpty() or binding.etR3.text.isEmpty() or binding.etCorrecta.text.isEmpty()) {
-            Toast.makeText(activity, "Hay que rellenar todos los datos", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "Hay que rellenar todos los datos", Toast.LENGTH_LONG)
+                .show()
             return false
         } else {
             return true

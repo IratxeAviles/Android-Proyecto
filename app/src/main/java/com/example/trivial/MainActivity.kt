@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
     val miRepositorio by lazy { Repositorio(miDataBase.miDAO()) }
     val preguntasVM: PreguntasVM by viewModels { PreguntasViewModelFactory(miRepositorio) }
     val puntuacionesVM: PuntuacionesVM by viewModels { PuntuacionesViewModelFactory(miRepositorio) }
-    val puntos:SharedPreferences=this.getSharedPreferences("puntos",Context.MODE_PRIVATE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.setDisplayShowTitleEnabled(false)
