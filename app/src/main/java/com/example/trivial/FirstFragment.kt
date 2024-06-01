@@ -99,33 +99,29 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_firstFragment_to_nuevaPreguntaFragment)
         }
         binding.bModificarPregunta.setOnClickListener {
-            if (comprobarPreguntas()) {
-                findNavController().navigate(R.id.action_firstFragment_to_datosFragment)
-            } else {
+            (activity as MainActivity).preguntasVM.mostrarPreguntas()
+            (activity as MainActivity).preguntasVM.listaPreguntas.observe(activity as MainActivity) {
+                if (it != null) {
+                    findNavController().navigate(R.id.action_firstFragment_to_datosFragment)
+                }
                 Toast.makeText(activity, "No hay preguntas disponibles", Toast.LENGTH_SHORT).show()
             }
         }
         binding.bJugar.setOnClickListener {
-            if (comprobarPreguntas()) {
-                findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
-            } else {
+            try {
+                (activity as MainActivity).preguntasVM.mostrarPreguntas()
+                (activity as MainActivity).preguntasVM.listaPreguntas.observe(activity as MainActivity) {
+                    if (it != null) {
+                        findNavController().navigate(R.id.action_firstFragment_to_trivialFragment)
+                    }
+                }
+            } catch (e: Exception) {
                 Toast.makeText(activity, "No hay preguntas disponibles", Toast.LENGTH_SHORT).show()
             }
+
         }
         binding.bPuntuacion.setOnClickListener {
             findNavController().navigate(R.id.action_firstFragment_to_puntuacionesFragment)
-        }
-    }
-
-    fun comprobarPreguntas(): Boolean {
-        val preguntasVM = (activity as MainActivity).preguntasVM
-        preguntasVM.mostrarPreguntas()
-        val listaPreguntas = preguntasVM.listaPreguntas.value
-
-        return if (listaPreguntas.isNullOrEmpty()) {
-            false
-        } else {
-            true
         }
     }
 }

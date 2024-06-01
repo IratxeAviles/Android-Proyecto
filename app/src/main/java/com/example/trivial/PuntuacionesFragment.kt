@@ -19,9 +19,6 @@ import com.example.trivial.recyclerview.Adaptador
 
 class PuntuacionesFragment : Fragment() {
     private var _binding: FragmentPuntuacionesBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     lateinit var miRecyclerView: RecyclerView
 
@@ -61,10 +58,8 @@ class PuntuacionesFragment : Fragment() {
                 miRecyclerView.layoutManager = LinearLayoutManager(activity)
                 miRecyclerView.adapter = Adaptador(it)
             }
-
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
