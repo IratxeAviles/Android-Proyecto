@@ -33,8 +33,8 @@ class PuntuacionesVM(private val miRepositorio: Repositorio) : ViewModel() {
         miRepositorio.borrarPuntuacion(miPuntuacion)
     }
 
-    fun buscarPuntuacionPorId(id: Int) = viewModelScope.launch {
-        puntuacion = miRepositorio.buscarPuntuacionPorId(id).asLiveData()
+    fun buscarPuntuacionPorNombre(nombre: String) = viewModelScope.launch {
+        puntuacion = miRepositorio.buscarPuntuacionPorNombre(nombre).asLiveData()
     }
 }
 

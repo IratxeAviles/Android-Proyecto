@@ -13,14 +13,6 @@ class Adaptador(val lista: List<Puntuacion>) : RecyclerView.Adapter<Adaptador.Vi
     inner class ViewHolder(val binding: RecyclerviewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         var id: Int = -1
-
-        init {
-            binding.llRecyclerItem.setOnClickListener {
-                val bundle = bundleOf("id" to id)
-                binding.llRecyclerItem.findNavController()
-                    .navigate(R.id.action_puntuacionesFragment_to_firstFragment, bundle)
-            }
-        }
     }
 
 

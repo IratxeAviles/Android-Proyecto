@@ -45,7 +45,10 @@ class PuntuacionesFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 // Handle the menu selection
                 return when (menuItem.itemId) {
+                    R.id.m_Grafico -> {
 
+                        true
+                    }
                     else -> false
                 }
             }

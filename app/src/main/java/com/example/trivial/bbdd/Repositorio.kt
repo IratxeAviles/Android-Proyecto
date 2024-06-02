@@ -29,8 +29,8 @@ class Repositorio(val miDAO: DAO) {
         miDAO.borrarPuntuacion(miPuntuacion)
     }
 
-    fun buscarPuntuacionPorId(id: Int): Flow<Puntuacion> {
-        return miDAO.buscarPuntuacionPorId(id)
+    fun buscarPuntuacionPorNombre(nombre: String): Flow<Puntuacion> {
+        return miDAO.buscarPuntuacionPorNombre(nombre)
     }
 
     fun mostrarPreguntas(): Flow<List<Pregunta>> {

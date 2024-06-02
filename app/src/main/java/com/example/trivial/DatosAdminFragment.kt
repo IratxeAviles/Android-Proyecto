@@ -53,7 +53,16 @@ class DatosAdminFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 // Handle the menu selection
                 return when (menuItem.itemId) {
-
+                    R.id.m_Modificar -> {
+                        if (validarContenido()) {
+                            modificar()
+                        }
+                        true
+                    }
+                    R.id.m_Borrar -> {
+                        borrar()
+                        true
+                    }
                     else -> false
                 }
             }
@@ -68,7 +77,6 @@ class DatosAdminFragment : Fragment() {
         }
         binding.bBorrar.setOnClickListener {
             borrar()
-            mostrar()
         }
         binding.bAnterior.setOnClickListener {
             posPregunta -= 1
@@ -137,6 +145,7 @@ class DatosAdminFragment : Fragment() {
     fun borrar() {
         (activity as MainActivity).preguntasVM.borrarPregunta(miPregunta)
         Toast.makeText(activity, "Pregunta eliminada", Toast.LENGTH_LONG).show()
+        mostrar()
     }
 
     fun validarContenido(): Boolean {

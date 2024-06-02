@@ -27,6 +27,7 @@ class TrivialFragment : Fragment() {
     private val binding get() = _binding!!
 
     lateinit var miPregunta: Pregunta
+    lateinit var miPuntuacion: Puntuacion
     var posPregunta: Int = 0
     lateinit var listaPreguntas: LiveData<List<Pregunta>>
     var puntos = 0
@@ -126,6 +127,16 @@ class TrivialFragment : Fragment() {
 
     private fun guardarPuntuacion() {
         if (binding.etIntroducirNombre.text.toString() != "") {
+            (activity as MainActivity).puntuacionesVM.buscarPuntuacionPorNombre(binding.etIntroducirNombre.text.toString())
+            (activity as MainActivity).puntuacionesVM.puntuacion.observe(activity as MainActivity) {
+                miPuntuacion = it
+                Puntuacion(
+                    id = miPuntuacion.id,
+                    usuario = binding.etIntroducirNombre.text.toString(),
+                    record = puntos,
+                )
+                Toast.makeText(activity, "Pregunta modificada", Toast.LENGTH_LONG).show()
+            }
             try {
                 (activity as MainActivity).puntuacionesVM.insertarPuntuacion(
                     Puntuacion(
@@ -137,7 +148,7 @@ class TrivialFragment : Fragment() {
                 findNavController().navigate(R.id.action_trivialFragment_to_firstFragment)
             } catch (e: Exception) {
                 Toast.makeText(
-                    (activity as MainActivity), "Error al insertar la pregunta",
+                    (activity as MainActivity), "Error al insertar la puntuacion",
                     Toast.LENGTH_SHORT
                 ).show()
                 print(e)

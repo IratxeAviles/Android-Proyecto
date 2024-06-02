@@ -24,8 +24,8 @@ interface DAO {
     @Delete
     suspend fun borrarPuntuacion(miPuntuacion: Puntuacion)
 
-    @Query("SELECT * FROM tabla_puntuaciones where usuario like :id")
-    fun buscarPuntuacionPorId(id: Int): Flow<Puntuacion>
+    @Query("SELECT * FROM tabla_puntuaciones where usuario like :nombre")
+    fun buscarPuntuacionPorNombre(nombre: String): Flow<Puntuacion>
 
     @Query("SELECT * FROM tabla_preguntas ORDER BY id ASC")
     fun mostrarPreguntas(): Flow<List<Pregunta>>

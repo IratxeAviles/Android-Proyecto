@@ -20,16 +20,16 @@ class PreguntasVM(private val miRepositorio: Repositorio) : ViewModel() {
 
     @WorkerThread
         fun insertarPregunta(miPregunta: Pregunta): LiveData<Boolean> {
-            val result = MutableLiveData<Boolean>()
+            val resultado = MutableLiveData<Boolean>()
             viewModelScope.launch {
                 try {
                     miRepositorio.insertarPregunta(miPregunta)
-                    result.value = true
+                    resultado.value = true
                 } catch (e: Exception) {
-                    result.value = false
+                    resultado.value = false
                 }
             }
-            return result
+            return resultado
         }
     @WorkerThread
     fun modificarPregunta(miPregunta: Pregunta) = viewModelScope.launch{

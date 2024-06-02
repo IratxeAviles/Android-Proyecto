@@ -2,6 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/m_Grafico"
-        android:title="Ver Grafico" />
+        android:id="@+id/m_Insertar"
+        android:title="Insertar" />
 </menu>
