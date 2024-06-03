@@ -7,9 +7,9 @@ import org.jetbrains.annotations.NotNull
 
 @Entity (tableName = "tabla_puntuaciones")
 data class Puntuacion(
-    @PrimaryKey(autoGenerate = true) val id:Int=1,
-    @NotNull @ColumnInfo var usuario: String,
-    @NotNull @ColumnInfo var record: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id:Int=0,
+    @NotNull @ColumnInfo (name = "usuario") var usuario: String,
+    @NotNull @ColumnInfo (name = "record")var record: Int = 0,
 ) {
 
 
