@@ -129,37 +129,48 @@ class TrivialFragment : Fragment() {
         if (binding.etIntroducirNombre.text.toString() != "") {
             (activity as MainActivity).puntuacionesVM.buscarPuntuacionPorNombre(binding.etIntroducirNombre.text.toString())
             (activity as MainActivity).puntuacionesVM.puntuacion.observe(activity as MainActivity) {
-                miPuntuacion = it
-                Puntuacion(
-                    id = miPuntuacion.id,
-                    usuario = binding.etIntroducirNombre.text.toString(),
-                    record = puntos,
-                )
-                Toast.makeText(activity, "Pregunta modificada", Toast.LENGTH_LONG).show()
+
+                try {
+                    if (it != null) {
+                        it.record = puntos
+                        (activity as MainActivity).puntuacionesVM.modificarPuntuacion(it)
+                        Toast.makeText((activity as MainActivity), "Puntuacion actualizada", Toast.LENGTH_LONG).show()
+                    } else {
+                        (activity as MainActivity).puntuacionesVM.insertarPuntuacion(
+                            Puntuacion(
+                                usuario = binding.etIntroducirNombre.text.toString(),
+                                record = puntos,
+                            )
+                        )
+                        Toast.makeText((activity as MainActivity), "Puntuacion insertada", Toast.LENGTH_LONG).show()
+                    }
+                    findNavController().navigate(R.id.action_trivialFragment_to_firstFragment)
+
+                } catch (e: Exception) {
+                    Toast.makeText((activity as MainActivity), e.message, Toast.LENGTH_SHORT).show()
+                }
+
+                //findNavController().navigate(R.id.action_trivialFragment_to_firstFragment)
+
             }
-            try {
-                (activity as MainActivity).puntuacionesVM.insertarPuntuacion(
-                    Puntuacion(
-                        usuario = binding.etIntroducirNombre.text.toString(),
-                        record = puntos,
-                    )
-                )
-                Toast.makeText(activity, "Puntuacion insertada", Toast.LENGTH_LONG).show()
-                findNavController().navigate(R.id.action_trivialFragment_to_firstFragment)
-            } catch (e: Exception) {
-                Toast.makeText(
-                    (activity as MainActivity), "Error al insertar la puntuacion",
-                    Toast.LENGTH_SHORT
-                ).show()
-                print(e)
-            }
+            /* try {
+
+                 findNavController().navigate(R.id.action_trivialFragment_to_firstFragment)
+             } catch (e: Exception) {
+                 Toast.makeText(
+                     (activity as MainActivity), "Error al insertar la puntuacion",
+                     Toast.LENGTH_SHORT
+                 ).show()
+                 print(e)
+             }*/
         } else {
-            Toast.makeText(activity, "Nombre vacio", Toast.LENGTH_LONG).show()
+            Toast.makeText((activity as MainActivity), "Nombre vacio", Toast.LENGTH_LONG).show()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        (activity as MainActivity).puntuacionesVM.puntuacion.removeObservers(activity as MainActivity)
     }
 }
